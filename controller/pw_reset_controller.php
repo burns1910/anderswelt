@@ -30,7 +30,7 @@
         $query->execute();
     }
 
-    function getTokenExpireDateByEmail($user_id) {
+    function getTokenExpireDateByEmail($email) {
         global $connection;
         $retval = 0;
 

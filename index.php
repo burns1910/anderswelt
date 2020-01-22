@@ -4,7 +4,6 @@ include './controller/login_form_controller.php';
 include 'header.php';
 include 'menu.php';
 if(!$logged_in_admin) {
-
 ?>
 
 <form method="post" action="" name="signin-form">

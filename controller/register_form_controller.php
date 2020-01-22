@@ -1,7 +1,7 @@
 <?php
-include 'register_controller.php';
+include 'user_controller.php';
 include 'mail_controller.php';
-require_once "./controller/lib/crypto/random.php";
+#require_once "./controller/lib/crypto/random.php";
 
 
 if (isset($_POST['register'])) {
@@ -38,7 +38,7 @@ if (isset($_POST['register'])) {
 
             $verifyMail_text = 'Moin '.$vorname.',<br /><br />';
             $verifyMail_text .= 'schön, dass du bei uns mitplanen möchtest. Bitte bestätige dafür zunächst deine E-Mail Adresse, indem du auf folgenden Link klickst:<br /><br />';
-            $verifyMail_text .= '<a href="https://planung.anderswe.lt/verify.php?id='.$user_id.'&token='.$token.'">https://planung.anderswe.lt/verify.php?id='.$user_id.'&token='.$token.'</a>';
+            $verifyMail_text .= '<a href="https://planung.anderswe.lt/verify_user.php?id='.$user_id.'&token='.$token.'">https://planung.anderswe.lt/verify.php?id='.$user_id.'&token='.$token.'</a>';
             $verifyMail_betreff = 'Anderswelt Planungskosmos Email Verifikation';
             sendMail($email, $verifyMail_betreff, $verifyMail_text, 'burns@anderswe.lt', 'Anderswelt Planungskosmos');
         } else {

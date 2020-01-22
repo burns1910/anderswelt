@@ -1,8 +1,8 @@
 <?php
 include 'pw_reset_controller.php';
-include 'register_controller.php';
+include 'user_controller.php';
 include 'mail_controller.php';
-require_once "./controller/lib/crypto/random.php";
+#require_once "./controller/lib/crypto/random.php";
 
 
 $tokenChecked = false;
@@ -18,8 +18,8 @@ if(isset($_GET['selector']) && isset($_GET['validator'])) {
 if(isset($_POST['reset-pw'])) {
     $selector = $_POST['selector'];
     $validator = $_POST['validator'];
-    if(validatedToken($selector, $validator)) {
-        $email = getMailBySelector($selector);
+    $email = getMailBySelector($selector);
+    if(validatedToken($selector, $validator) && !tokenExpired($email)) {
         $pw_hash = password_hash($_POST['password'], PASSWORD_BCRYPT);     
         $update = updatePWByMail($email, $pw_hash);
         
@@ -31,6 +31,19 @@ if(isset($_POST['reset-pw'])) {
             $message = '<p class="aw-success-message">Password erfolgreich geändert.</p><br />';
         }
     }
+}
+
+function tokenExpired($email) {
+    $expired = true;
+    $expireDate = getTokenExpireDateByEmail($email);
+    $timestamp = time();
+
+    if($timestamp >= $expireDate) {
+        $message = '<p class="aw-error-message">Der Link zur Verifizierung ist abgelaufen</p><br />';
+    } elseif ($timestamp < $expireDate) {
+        $expired = false;
+    }
+    return $expired;
 }
 
 function validatedToken($selector, $validator) {

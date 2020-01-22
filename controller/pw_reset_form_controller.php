@@ -1,8 +1,8 @@
 <?php
 include 'pw_reset_controller.php';
-include 'register_controller.php';
+include 'user_controller.php';
 include 'mail_controller.php';
-require_once "./controller/lib/crypto/random.php";
+#require_once "./controller/lib/crypto/random.php";
 
 
  if (isset($_POST['reset-mail'])) {
