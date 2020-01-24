@@ -2,9 +2,9 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require './controller/lib/mail/Exception.php';
-require './controller/lib/mail/PHPMailer.php';
-require './controller/lib/mail/SMTP.php';
+require 'lib/mail/Exception.php';
+require 'lib/mail/PHPMailer.php';
+require 'lib/mail/SMTP.php';
 
     function listeAllerAbsender() {
         global $mail_absender;

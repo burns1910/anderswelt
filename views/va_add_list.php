@@ -1,8 +1,8 @@
 <?php
-include 'config.php';
-include './controller/va_form_controller.php';
-include 'header.php';
-include 'menu.php';
+include '../config.php';
+include '../controller/va_form_controller.php';
+include '../header.php';
+include '../menu.php';
 
 if(!$logged_in_admin) {
 
@@ -53,5 +53,5 @@ else {
 </form>
 <?php 
 }
-include 'footer.php'; 
+include '../footer.php';
 ?>

@@ -1,9 +1,9 @@
 <?php
-include 'config.php';
-include './controller/va_controller.php';
-include './controller/gl_form_controller.php';
-include 'header.php';
-include 'menu.php';
+include '../config.php';
+include '../controller/va_controller.php';
+include '../controller/gl_form_controller.php';
+include '../header.php';
+include '../menu.php';
 
 if(!$logged_in_admin) {
 
@@ -103,5 +103,5 @@ else {
 	    }
 	}
 }
-include 'footer.php';
+include '../footer.php';
 ?>

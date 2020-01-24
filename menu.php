@@ -12,51 +12,55 @@ if(!$logged_in_admin) {
 } else {
 
   $home = array(
-    "/index.php");
+    "/anderswelt/index.php");
   $mitarbeiter = array(
-    "/menu_ma.php", 
-    "/ma_tabelle.php", 
-    "/ma_edit.php");
+    "/anderswelt/menu_ma.php",
+    "/anderswelt/views/ma_tabelle.php",
+    "/anderswelt/views/ma_edit.php");
   $veranstaltungen = array(
-    "/va_add_list.php",
-    "/gl_add_list.php",
-    "/gl_edit.php");
+    "/anderswelt/views/va_add_list.php",
+    "/anderswelt/views/gl_add_list.php",
+    "/anderswelt/views/gl_edit.php");
   $kommunikation = array(
-    "/menu_komm.php", 
-    "/crew_add_table.php",  
-    "/crew_edit.php", 
-    "/mail.php",
-    "/list_add_table.php");
+    "/anderswelt/menu_komm.php",
+    "/anderswelt/views/crew_add_table.php",
+    "/anderswelt/views/crew_edit.php",
+    "/anderswelt/views/mail.php",
+    "/anderswelt/views/list_add_table.php");
   $bauprojekte = array(
-    "/menu_bau.php");
+    "/anderswelt/menu_bau.php");
 
   $aktuelle_seite = $_SERVER['PHP_SELF'];
 
   $menu_html = '<div class="topnav">';
+  $home_url = BASE_URL."index.php";
   if(in_array($aktuelle_seite, $home)) {
-    $menu_html .='<a class="active" href="index.php"><i class="fas fa-home"></i> Home</a>';
+      $menu_html .='<a class="active" href="'.$home_url.'"><i class="fas fa-home"></i> Home</a>';
   } else {
-    $menu_html .='<a href="index.php"><i class="fas fa-home"></i> Home</a>';
+      $menu_html .='<a href="'.$home_url.'"><i class="fas fa-home"></i> Home</a>';
   }
-  if(in_array($aktuelle_seite, $mitarbeiter)) {
+  /*if(in_array($aktuelle_seite, $mitarbeiter)) {
     $menu_html .='<a class="active" href="menu_ma.php"><i class="far fa-heart"></i> Mitarbeiter</a>';
   } else {
     $menu_html .='<a href="menu_ma.php"><i class="far fa-heart"></i> Mitarbeiter</a>';
-  }
+  }*/
+  $va_url = BASE_URL."/views/va_add_list.php";
   if(in_array($aktuelle_seite, $veranstaltungen)) {
-    $menu_html .='<a class="active" href="va_add_list.php"><i class="far fa-calendar-alt"></i> Veranstaltungen</a>';
+      $menu_html .='<a class="active" href="'.$va_url.'"><i class="far fa-calendar-alt"></i> Veranstaltungen</a>';
   } else {
-    $menu_html .='<a href="va_add_list.php"><i class="far fa-calendar-alt"></i> Veranstaltungen</a>';
+    $menu_html .='<a href="'.$va_url.'"><i class="far fa-calendar-alt"></i> Veranstaltungen</a>';
   }
+  $komm_url = BASE_URL."menu_komm.php";
   if(in_array($aktuelle_seite, $kommunikation)) {
-    $menu_html .='<a class="active" href="menu_komm.php"><i class="fas fa-comments"></i> Kommunikation</a>';
+      $menu_html .='<a class="active" href="'.$komm_url.'"><i class="fas fa-comments"></i> Kommunikation</a>';
   } else {
-    $menu_html .='<a href="menu_komm.php"><i class="fas fa-comments"></i> Kommunikation</a>';
+    $menu_html .='<a href="'.$komm_url.'"><i class="fas fa-comments"></i> Kommunikation</a>';
   }
+  $bau_url = BASE_URL."menu_bau.php";
   if(in_array($aktuelle_seite, $bauprojekte)) {
-    $menu_html .='<a class="active" href="menu_bau.php"><i class="fas fa-hard-hat"></i> Bauprojekte</a>';
+      $menu_html .='<a class="active" href="'.$bau_url.'"><i class="fas fa-hard-hat"></i> Bauprojekte</a>';
   } else {
-    $menu_html .='<a href="menu_bau.php"><i class="fas fa-hard-hat"></i> Bauprojekte</a>';
+      $menu_html .='<a href="'.$bau_url.'"><i class="fas fa-hard-hat"></i> Bauprojekte</a>';
   }
   echo $menu_html;
 ?>

@@ -1,8 +1,8 @@
 <?php
-include 'config.php';
-include './controller/gl_controller.php';
-include 'header.php';
-include 'menu.php';
+include '../config.php';
+include '../controller/gl_controller.php';
+include '../header.php';
+include '../menu.php';
 
 if(!$logged_in_admin) {
 
@@ -55,5 +55,5 @@ else {
 	}
 
 }
-include 'footer.php';
+include '../footer.php';
 ?>

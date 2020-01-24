@@ -1,9 +1,9 @@
 <?php
-include 'config.php';
-include './controller/crew_controller.php';
-include './controller/list_controller.php';
-include 'header.php';
-include 'menu.php';
+include '../config.php';
+include '../controller/crew_controller.php';
+include '../controller/list_controller.php';
+include '../header.php';
+include '../menu.php';
 
 if(!$logged_in_admin) {
 
@@ -59,5 +59,5 @@ else {
 	}
 
 }
-include 'footer.php';
+include '../footer.php';
 ?>

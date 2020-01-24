@@ -1,9 +1,10 @@
 <?php
-include 'config.php';
-include './controller/list_controller.php';
-include './controller/crew_form_controller.php';
-include 'header.php';
-include 'menu.php';
+include '../config.php';
+include '../controller/list_controller.php';
+include '../controller/crew_form_controller.php';
+include '../header.php';
+include '../menu.php';
+global $crewList;
 
 if(!$logged_in_admin) {
 
@@ -115,5 +116,5 @@ else {
 
 <?php
 }
-include 'footer.php';
+include '../footer.php';
 ?>
