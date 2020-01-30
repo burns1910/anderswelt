@@ -13,10 +13,6 @@ if(!$logged_in_admin) {
 
   $home = array(
     "/anderswelt/index.php");
-  $mitarbeiter = array(
-    "/anderswelt/menu_ma.php",
-    "/anderswelt/views/ma_tabelle.php",
-    "/anderswelt/views/ma_edit.php");
   $veranstaltungen = array(
     "/anderswelt/views/va_add_list.php",
     "/anderswelt/views/gl_add_list.php",
@@ -39,11 +35,6 @@ if(!$logged_in_admin) {
   } else {
       $menu_html .='<a href="'.$home_url.'"><i class="fas fa-home"></i> Home</a>';
   }
-  /*if(in_array($aktuelle_seite, $mitarbeiter)) {
-    $menu_html .='<a class="active" href="menu_ma.php"><i class="far fa-heart"></i> Mitarbeiter</a>';
-  } else {
-    $menu_html .='<a href="menu_ma.php"><i class="far fa-heart"></i> Mitarbeiter</a>';
-  }*/
   $va_url = BASE_URL."/views/va_add_list.php";
   if(in_array($aktuelle_seite, $veranstaltungen)) {
       $menu_html .='<a class="active" href="'.$va_url.'"><i class="far fa-calendar-alt"></i> Veranstaltungen</a>';
