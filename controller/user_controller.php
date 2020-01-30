@@ -1,9 +1,10 @@
 <?php
 
-    function addUser($vorname, $nachname, $email, $token, $pw_hash, $token_expire_date) {
+    function addUser($role_id, $vorname, $nachname, $email, $token, $pw_hash, $token_expire_date) {
         global $connection;
 
-        $query = $connection->prepare("INSERT INTO user(VORNAME,NACHNAME,EMAIL,TOKEN,PW_HASH,TOKEN_EXPIRE_DATE) VALUES (:vorname,:nachname,:email,:token,:pw_hash,:token_expire_date)");
+        $query = $connection->prepare("INSERT INTO user(ROLE_ID,VORNAME,NACHNAME,EMAIL,TOKEN,PW_HASH,TOKEN_EXPIRE_DATE) VALUES (:role_id,:vorname,:nachname,:email,:token,:pw_hash,:token_expire_date)");
+        $query->bindParam("role_id", $role_id, PDO::PARAM_STR);
         $query->bindParam("vorname", $vorname, PDO::PARAM_STR);
         $query->bindParam("nachname", $nachname, PDO::PARAM_STR);
         $query->bindParam("email", $email, PDO::PARAM_STR);
@@ -113,4 +114,42 @@
     return $retval;
     }
 
+ /*   function getAllRoles() {
+        global $connection;
+        $query = $connection->prepare("SELECT id, name FROM roles");
+        $query->execute();
+
+    return $query->fetch(PDO::FETCH_ASSOC);
+    }
+*/
+    function updateUser($user_id, $role_id, $vorname, $nachname, $email, $pw_hash) {
+        global $connection;
+        $retval = false;
+
+        $query = $connection->prepare("UPDATE user SET role_id =:role_id, vorname =:vorname, nachname=:nachname, email=:email, pw_hash=:pw_hash WHERE id = :id");
+        $query->bindParam("id", $id, PDO::PARAM_STR);
+        $query->bindParam("role_id", $role_id, PDO::PARAM_STR);
+        $query->bindParam("vorname", $vorname, PDO::PARAM_STR);
+        $query->bindParam("nachname", $nachname, PDO::PARAM_STR);
+        $query->bindParam("email", $email, PDO::PARAM_STR);
+        $query->bindParam("pw_hash", $pw_hash, PDO::PARAM_STR);
+
+        try {
+            $connection->beginTransaction();
+            $query->execute();
+            $connection->commit();
+            $retval = true;
+        } catch(PDOExecption $e) {
+            $connection->rollback();
+            print($e->getMessage());
+        }
+        return $retval;
+    }
+
+    function deleteUser($id) {
+        global $connection;
+        $query = $connection->prepare("DELETE FROM users WHERE id=:id");
+        $query->bindParam("id", $id, PDO::PARAM_STR);
+        $query->execute();
+    }
 ?>

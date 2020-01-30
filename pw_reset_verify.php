@@ -6,6 +6,8 @@ include 'menu.php';
 
 
 if($tokenChecked) {
+    global $selector;
+    global $validator;
 ?>
 	<form action="" method="post">
 	    <input type="hidden" name="selector" value="<?php echo $selector; ?>">

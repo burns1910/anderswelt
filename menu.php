@@ -1,10 +1,11 @@
 <?php
-
+$home_url = BASE_URL."index.php";
+$logout_url = BASE_URL."logout.php";
 if(!$logged_in_admin) {
 ?>
 
     <div class="topnav">
-      <a class="active" href="index.php"><i class="fa fa-fw fa-home"></i> Home</a>
+      <a class="active" href="<?php echo $home_url?>"><i class="fa fa-fw fa-home"></i> Home</a>
     </div>
     <div class="aw-content">
 
@@ -29,7 +30,6 @@ if(!$logged_in_admin) {
   $aktuelle_seite = $_SERVER['PHP_SELF'];
 
   $menu_html = '<div class="topnav">';
-  $home_url = BASE_URL."index.php";
   if(in_array($aktuelle_seite, $home)) {
       $menu_html .='<a class="active" href="'.$home_url.'"><i class="fas fa-home"></i> Home</a>';
   } else {
@@ -57,7 +57,7 @@ if(!$logged_in_admin) {
 ?>
 
       <div class="topnav-right">
-      	<a href="logout.php"><i class="fas fa-user-times"></i> Logout</a> 
+      	<a href="<?php echo $logout_url?>"><i class="fas fa-user-times"></i> Logout</a>
       </div>
     </div>
     <div class="aw-content">
