@@ -1,6 +1,6 @@
 <?php
 include '../config.php';
-include '../controller/role_controller.php';
+include '../controller/role_form_controller.php';
 include '../header.php';
 include '../menu.php';
 
@@ -48,8 +48,8 @@ else {
                 echo $value;
                 echo "</div>\n";
             }
-            echo '<div class="aw-cell"><a href="role_edit.php?action=edit&id='.$id.'">bearbeiten</a></div>';
-            echo '<div class="aw-cell"><a href="role_edit.php?action=delete&id='.$id.'">l&ouml;schen</a></div>';
+            echo '<div class="aw-cell"><a href="role_edit.php?id='.$id.'">bearbeiten</a></div>';
+            echo '<div class="aw-cell"><a href="role_add_table.php?action=delete&id='.$id.'">l&ouml;schen</a></div>';
             echo "\t</div>\n";
         }
         echo "</div>";
