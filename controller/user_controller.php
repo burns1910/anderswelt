@@ -114,14 +114,20 @@
     return $retval;
     }
 
- /*   function getAllRoles() {
+    function getAllUsers() {
         global $connection;
-        $query = $connection->prepare("SELECT id, name FROM roles");
+        $query = $connection->prepare("SELECT u.id, u.vorname, u.nachname, r.name as role FROM user u LEFT JOIN roles r ON u.role_id=r.id");
         $query->execute();
 
-    return $query->fetch(PDO::FETCH_ASSOC);
+        $retvalQueryArray = $query->fetchAll(PDO::FETCH_ASSOC);
+        $retval = array();
+        foreach ($retvalQueryArray as $role) {
+            array_push($retval, $role);
+        }
+
+        return $retval;
     }
-*/
+
     function updateUser($user_id, $role_id, $vorname, $nachname, $email, $pw_hash) {
         global $connection;
         $retval = false;
