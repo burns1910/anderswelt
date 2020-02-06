@@ -125,20 +125,28 @@
             array_push($retval, $role);
         }
 
-        return $retval;
+    return $retval;
     }
 
-    function updateUser($user_id, $role_id, $vorname, $nachname, $email, $pw_hash) {
+    function getUserByID($id) {
+        global $connection;
+        $query = $connection->prepare("SELECT id, vorname, nachname, role_id FROM user WHERE id=:id");
+        $query->bindParam("id", $id, PDO::PARAM_STR);
+        $query->execute();
+
+        $retval = $query->fetch(PDO::FETCH_ASSOC);
+    return $retval;
+    }
+
+    function updateUser($id, $role_id, $vorname, $nachname) {
         global $connection;
         $retval = false;
 
-        $query = $connection->prepare("UPDATE user SET role_id =:role_id, vorname =:vorname, nachname=:nachname, email=:email, pw_hash=:pw_hash WHERE id = :id");
+        $query = $connection->prepare("UPDATE user SET role_id =:role_id, vorname =:vorname, nachname=:nachname WHERE id = :id");
         $query->bindParam("id", $id, PDO::PARAM_STR);
         $query->bindParam("role_id", $role_id, PDO::PARAM_STR);
         $query->bindParam("vorname", $vorname, PDO::PARAM_STR);
         $query->bindParam("nachname", $nachname, PDO::PARAM_STR);
-        $query->bindParam("email", $email, PDO::PARAM_STR);
-        $query->bindParam("pw_hash", $pw_hash, PDO::PARAM_STR);
 
         try {
             $connection->beginTransaction();

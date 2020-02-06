@@ -1,32 +1,21 @@
 <?php
 include 'user_controller.php';
 
-$user_id = 0;
-$role_id = NULL;
-$username = "";
-$email = "";
-$password = "";
-$passwordConf = "";
-$users = array();
-$errors = array();
 
-if (isset($_POST['update_user'])) { // if user clicked update_user button ...
-    $user_id = $_POST['user_id'];
-    updateUser($user_id);
-}
-// ACTION: Save User
-if (isset($_POST['save_user'])) {  // if user clicked save_user button ...
-    saveUser();
-}
-// ACTION: fetch user for editting
-if (isset($_GET["edit_user"])) {
-    $user_id = $_GET["edit_user"];
-    editUser($user_id);
-}
-// ACTION: Delete user
-if (isset($_GET['delete_user'])) {
-    $user_id = $_GET['delete_user'];
-    deleteUser($user_id);
+
+if (isset($_POST['edit-user'])) {
+
+    $id = $_POST['id'];
+    $vorname = $_POST['vorname'];
+    $nachname = $_POST['nachname'];
+    $role_id = $_POST['rolle'];
+
+    $user = updateUser($id, $role_id, $vorname, $nachname);
+    if($role_id!=0) {
+        $message = '<p class="aw-success-message">User '.$vorname.' '.$nachname.' wurde erfolgreich ge&auml;ndert.</p><br />';
+    } else {
+        $message = '<p class="aw-error-message">Irgendwas ist schief gelaufen</p><br />';
+    }
 }
 
 ?>

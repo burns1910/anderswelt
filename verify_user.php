@@ -1,6 +1,6 @@
 <?php
 include 'config.php';
-include './controller/register_controller.php';
+include './controller/user_controller.php';
 include './controller/mail_controller.php';
 include 'header.php';
 include 'menu.php';

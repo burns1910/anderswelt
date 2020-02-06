@@ -70,4 +70,14 @@
         return $retval;
     }
 
+    function getRoleNameByID($id) {
+        global $connection;
+        $query = $connection->prepare("SELECT name FROM roles WHERE ID=:id");
+        $query->bindParam("id", $id, PDO::PARAM_STR);
+        $query->execute();
+
+        $retval = $query->fetch(PDO::FETCH_ASSOC);
+        return $retval;
+    }
+
 ?>
