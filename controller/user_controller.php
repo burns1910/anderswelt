@@ -78,7 +78,7 @@
 
     function getAllUsers() {
         global $connection;
-        $query = $connection->prepare("SELECT u.id, u.vorname, u.nachname, r.name as role FROM user u LEFT JOIN roles r ON u.role_id=r.id");
+        $query = $connection->prepare("SELECT u.id, u.vorname, u.nachname, u.email, r.name as role FROM user u LEFT JOIN roles r ON u.role_id=r.id");
         $query->execute();
 
         $retvalQueryArray = $query->fetchAll(PDO::FETCH_ASSOC);
