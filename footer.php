@@ -16,8 +16,6 @@
   }, false);
   })();
   </script>
-  <script src="/anderswelt/css/jquery-3.4.1.js"></script>
-  <script src="/anderswelt/css/bootstrap.bundle.js"></script>
 </body>
 </html>
 <?php

@@ -84,8 +84,8 @@ else {
                   </div>
                   <p>Header:</p>
                   <div class="custom-file mb-3">
-                    <input type="file" class="custom-file-input" id="headerFile" name="header">
-                    <label class="custom-file-label" for="headerFile">Datei auswählen</label>
+                    <input type="file" class="custom-file-input" id="customFile" name="filename">
+                    <label class="custom-file-label" for="customFile">Datei auswählen</label>
                   </div>
                   <button type="submit" class="btn btn-primary" name="create-va" value="create-va">Erstellen</button>
               </form>
@@ -93,6 +93,12 @@ else {
           </div>
         </div>
       </div>
+      <script>
+      $(".custom-file-input").on("change", function() {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+      });
+      </script>
 
 <?php
 }
