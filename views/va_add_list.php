@@ -30,13 +30,16 @@ else {
         </div>
         <div class="col-xl-10">
 <?php
-
+        echo '          <h4 class="mb-4">Folgende Veranstaltungen stehen bevor:</h4>'."\n";
     $veranstaltungen = getAnstehendeVA();
     if($veranstaltungen!=null) {
-        echo '          <h4 class="mb-4">Folgende Veranstaltungen stehen bevor:</h4>'."\n";
         foreach ($veranstaltungen as $va) {
           echo '          <div class="card bg-light mb-3" style="width:400px">'."\n";
-          echo '            <img class="card-img-top" src="/anderswelt/img/header/'.$va['header'].'.png" alt="'.$va['titel'].'">'."\n";
+          if($va['header'] != NULL) {
+            echo '            <img class="card-img-top" src="/anderswelt/img/va_header/'.$va['header'].'" alt="'.$va['titel'].'">'."\n";
+          } else {
+            echo '            <img class="card-img-top" src="/anderswelt/img/va_header/default.png" alt="'.$va['titel'].'">'."\n";
+          }
           echo '            <div class="card-title text-center">'.$va['titel'].'</div>'."\n";
           echo '              <ul class="list-group list-group-flush">'."\n";
           echo '                <li class="list-group-item">Beginn: '.$va['start'].'</li>'."\n";
@@ -84,7 +87,7 @@ else {
                   </div>
                   <p>Header:</p>
                   <div class="custom-file mb-3">
-                    <input type="file" class="custom-file-input" id="customFile" name="filename">
+                    <input type="file" class="custom-file-input" id="customFile" name="header">
                     <label class="custom-file-label" for="customFile">Datei auswählen</label>
                   </div>
                   <button type="submit" class="btn btn-primary" name="create-va" value="create-va">Erstellen</button>
