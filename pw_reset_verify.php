@@ -9,12 +9,25 @@ if($tokenChecked) {
     global $selector;
     global $validator;
 ?>
-	<form action="" method="post">
-	    <input type="hidden" name="selector" value="<?php echo $selector; ?>">
-	    <input type="hidden" name="validator" value="<?php echo $validator; ?>">
-	    <div class="form-element"><input type="password" class="text" name="password" placeholder="Enter your new password" required></div>
-	    <button type="submit" name="reset-pw" value="reset-pw">&Auml;ndern</button>
-	</form>
-<?php 
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+          <?php include 'messages.php'; ?>
+          <form method="post" action="">
+      	    <input type="hidden" name="selector" value="<?php echo $selector; ?>">
+      	    <input type="hidden" name="validator" value="<?php echo $validator; ?>">
+            <div class="form-group">
+              <input type="password" class="form-control mb-4" name="password" placeholder="Enter your new password" required>
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control mb-4" name="password2" placeholder="Re-enter your new password" required>
+            </div>
+      	    <button type="submit" class="btn btn-primary" name="reset-pw" value="reset-pw">&Auml;ndern</button>
+	        </form>
+        </div>
+      </div>
+    </div>
+
+<?php
 }
 include 'footer.php'; ?>

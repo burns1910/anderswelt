@@ -6,26 +6,42 @@ include 'menu.php';
 if(!$logged_in_admin) {
 ?>
 
-<form method="post" action="" name="signin-form">
-    <div class="form-element">
-        <label>E-Mail</label>
-        <input type="email" name="email" required />
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+          <?php include 'messages.php' ?>
+          <form method="post" action="" name="signin-form" class="mb-4">
+            <h2 class="text-center">Login</h2>
+            <hr>
+            <div class="form-group">
+              <label for="inputEmail">E-Mail</label>
+              <input type="email" class="form-control" id="inputEmail" name="email" required />
+            </div>
+            <div class="form-group">
+              <label for="inputPassword">Password</label>
+              <input type="password" class="form-control" id="inputPassword" name="password" required />
+            </div>
+            <button type="submit" class="btn btn-primary" name="login" value="login">Log In</button>
+          </form>
+          <p><a href="register.php"><i class="fa fa-fw fa-user-plus"></i>Neuen User registrieren</a></p>
+          <p><a href="pw_reset.php"><i class="fa fa-fw fa-refresh"></i>Password vergessen?</a></p>
+        </div>
+      </div>
     </div>
-    <div class="form-element">
-        <label>Password</label>
-        <input type="password" name="password" required />
-    </div>
-    <button type="submit" name="login" value="login">Log In</button>
-</form><br />
 
-<a class="aw-center-text" href="register.php"><i class="fa fa-fw fa-user-plus"></i>Neuen User registrieren</a><br /><br />
-<a class="aw-center-text" href="pw_reset.php"><i class="fa fa-fw fa-refresh"></i>Password vergessen?</a>
 
 
 <?php
 }
 else {
-	echo '<p class="aw-center-text">Hallo '.$_SESSION['user_vorname'].'</p>';
+?>
+    <div class="container">
+      <blockquote class="blockquote">
+        <p>Da spricht man wohl wieder einmal vom sogenannten besten Leben!</p>
+        <footer class="blockquote-footer">la cr&eacute;ature mythique</footer>
+      </blockquote>
+  </div>
+<?php
 }
 include 'footer.php';
 ?>

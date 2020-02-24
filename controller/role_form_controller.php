@@ -8,9 +8,9 @@ if (isset($_POST['add-role'])) {
 
     $role_id = addRole($name, $description);
     if($role_id!=0) {
-        $message = '<p class="aw-success-message">Rolle '.$name.' wurde erfolgreich zur Liste hinzugefügt.</p><br />';
+        $_SESSION['success_msg'] = 'Rolle '.$name.' wurde erfolgreich zur Liste hinzugefügt.';
     } else {
-        $message = '<p class="aw-error-message">Irgendwas ist schief gelaufen</p><br />';
+        $_SESSION['error_msg'] = 'Irgendwas ist schief gelaufen :/';
     }
 }
 
@@ -22,18 +22,18 @@ if (isset($_POST['edit-role'])) {
 
     $role_id = updateRole($id, $name, $description);
     if($role_id!=0) {
-        $message = '<p class="aw-success-message">Rolle '.$name.' wurde erfolgreich ge&auml;ndert.</p><br />';
+        $_SESSION['success_msg'] = 'Rolle '.$name.' wurde erfolgreich ge&auml;ndert.';
     } else {
-        $message = '<p class="aw-error-message">Irgendwas ist schief gelaufen</p><br />';
+        $_SESSION['error_msg'] = 'Irgendwas ist schief gelaufen :/';
     }
 }
 
 if (isset($_GET['id']) && isset($_GET['action'])) {
     if(strcmp($_GET['action'], "delete") == 0) {
         deleteRole($_GET['id']);
-        $message = '<p class="aw-success-message">Rolle wurde erfolgreich gel&ouml;scht.</p><br />';
+        $_SESSION['success_msg'] = 'Rolle wurde erfolgreich gel&ouml;scht.';
     } else {
-        $message = '<p class="aw-error-message">Irgendwas ist schief gelaufen</p><br />';
+        $_SESSION['error_msg'] = 'Irgendwas ist schief gelaufen :/';
     }
 }
 

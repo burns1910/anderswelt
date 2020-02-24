@@ -19,17 +19,24 @@ if(isset($_POST['reset-pw'])) {
     $selector = $_POST['selector'];
     $validator = $_POST['validator'];
     $email = getMailBySelector($selector);
-    if(validatedToken($selector, $validator) && !tokenExpired($email)) {
-        $pw_hash = password_hash($_POST['password'], PASSWORD_BCRYPT);     
-        $update = updatePWByMail($email, $pw_hash);
-        
-        deleteTokenByEMail($email);
-        
-        if ( $update == true ) {
-            // New password. New session.
-            session_destroy();
-            $message = '<p class="aw-success-message">Password erfolgreich geändert.</p><br />';
-        }
+    $password = $_POST['password'];
+    $password2 = $_POST['password2'];
+    $pw_equal = strcmp($password, $password2);
+    if($pw_equal==0) {
+      if(validatedToken($selector, $validator) && !tokenExpired($email)) {
+          $pw_hash = password_hash($_POST['password'], PASSWORD_BCRYPT);
+          $update = updatePWByMail($email, $pw_hash);
+
+          deleteTokenByEMail($email);
+
+          if ( $update == true ) {
+              // New password. New session.
+              session_destroy();
+              $_SESSION['success_msg'] = 'Password erfolgreich ge&auml;ndert.';
+          }
+      }
+    } else {
+      $_SESSION['error_msg'] = 'Die Passw&ouml;rter stimmen nicht &uuml;berein.';
     }
 }
 
@@ -39,7 +46,7 @@ function tokenExpired($email) {
     $timestamp = time();
 
     if($timestamp >= $expireDate) {
-        $message = '<p class="aw-error-message">Der Link zur Verifizierung ist abgelaufen</p><br />';
+        $_SESSION['error_msg'] = 'Der Link zur Verifizierung ist abgelaufen.';
     } elseif ($timestamp < $expireDate) {
         $expired = false;
     }
@@ -58,12 +65,12 @@ function validatedToken($selector, $validator) {
             return true;
         }
         else {
-            $message = '<p class="aw-error-message">Verifizierung fehlgeschlagen.</p><br />';
+            $_SESSION['error_msg'] = 'Verifizierung fehlgeschlagen.';
             return false;
         }
     }
     else {
-        $message = '<p class="aw-error-message">Verifizierung fehlgeschlagen.</p><br />';
+        $_SESSION['error_msg'] = 'Verifizierung fehlgeschlagen.';
         return false;
     }
 }

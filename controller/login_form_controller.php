@@ -2,13 +2,13 @@
 include 'user_controller.php';
 
 if (isset($_POST['login'])) {
- 
+
     $email = $_POST['email'];
     $password = $_POST['password'];
     $user = getUserByMail($email);
- 
+
     if (!$user) {
-        $message = '<p class="aw-error-message">E-Mail Password Kombination konnte nicht verifiziert werden!</p><br />';
+        $_SESSION['error_msg'] = 'E-Mail Password Kombination konnte nicht verifiziert werden!';
     } else {
         if ((password_verify($password, $user['pw_hash'])) && ($user['aktiv'] == 1)) {
             $_SESSION['user_id'] = $user['id'];
@@ -17,7 +17,7 @@ if (isset($_POST['login'])) {
             $_SESSION['user_email'] = $user['email'];
             header("Location: index.php");
         } else {
-            $message = '<p class="aw-error-message">E-Mail Password Kombination konnte nicht verifiziert werden!</p><br />';
+            $_SESSION['error_msg'] = 'E-Mail Password Kombination konnte nicht verifiziert werden!';
         }
     }
 }

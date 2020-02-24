@@ -2,7 +2,6 @@
 include 'pw_reset_controller.php';
 include 'user_controller.php';
 include 'mail_controller.php';
-#require_once "./controller/lib/crypto/random.php";
 
 
  if (isset($_POST['reset-mail'])) {
@@ -32,10 +31,10 @@ include 'mail_controller.php';
         $resetMail_text .= sprintf('<a href="%s">%s</a></p>', $url, $url);
         $resetMail_betreff = 'Anderswelt Planungskosmos Reset Password';
         sendMail($email, $resetMail_betreff, $resetMail_text, 'burns@anderswe.lt', 'Anderswelt Planungskosmos');
-        $message = '<p class="aw-info-message">Bitte check dein E-Mail Postfach</p><br />';
+        $_SESSION['info_msg'] = 'Bitte check dein E-Mail Postfach';
     }
     else {
-        $message = '<p class="aw-error-message">Bitte gib eine g&uuml;ltige E-Mail Adresse ein.</p><br />';
+        $_SESSION['error_msg'] = 'Bitte gib eine g&uuml;ltige E-Mail Adresse ein.';
     }
 }
 

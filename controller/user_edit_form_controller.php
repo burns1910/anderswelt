@@ -12,9 +12,9 @@ if (isset($_POST['edit-user'])) {
 
     $user = updateUser($id, $role_id, $vorname, $nachname);
     if($role_id!=0) {
-        $message = '<p class="aw-success-message">User '.$vorname.' '.$nachname.' wurde erfolgreich ge&auml;ndert.</p><br />';
+        $_SESSION['success_msg'] = 'User '.$vorname.' '.$nachname.' wurde erfolgreich ge&auml;ndert.';
     } else {
-        $message = '<p class="aw-error-message">Irgendwas ist schief gelaufen</p><br />';
+        $_SESSION['error_msg'] = 'Irgendwas ist schief gelaufen :/';
     }
 }
 
