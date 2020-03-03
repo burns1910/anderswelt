@@ -1,6 +1,8 @@
 <?php
 include 'config.php';
-include './controller/user_controller.php';
+include './controller/UserDAO.php';
+$connection = $database->getConnection();
+$userDAO = new UserDAO($connection);
 include './controller/mail_controller.php';
 include 'header.php';
 include 'menu.php';
@@ -9,27 +11,27 @@ $tokenChecked = false;
 if(isset($_GET['id']) && isset($_GET['token'])) {
   $user_id = $_GET['id'];
   $token = $_GET['token'];
-  $user = getUserByID($user_id);
-  $email = $user['email'];
-  $verified = $user['mail_verified'];
+  $user = $userDAO->getUserByID($user_id);
+  $email = $user->getEmail();
+  $verified = $user->isMailVerified();
 
   if($verified == 0) {
     $timestamp = time();
-    $expireDate = strtotime($user['token_expire_date']);
+    $expireDate = strtotime($user->getTokenExpireDate());
 
     if($timestamp >= $expireDate) {
       echo '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>Der Link zur Verifizierung ist abgelaufen</div>';
         // Neuen Link zusenden
     } elseif ($timestamp < $expireDate) {
       if ( false !== ctype_xdigit( $token )) {
-        $tokenChecked = validatedToken($token, $user['token']);
+        $tokenChecked = validatedToken($token, $user->getToken());
       }
       if($tokenChecked) {
-        verifyEmail($email);
+        $userDAO->verifyEmail($email);
         echo '<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>E-Mail erfolgreich aktiviert</div>';
         echo '<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>Dein Account muss noch freigeschaltet werden, Burns weiss Bescheid...</div>';
 
-        $activateMail_text = sprintf("Neuer User %s %s hat sich registriert.", $user['vorname'], $user['nachname']);
+        $activateMail_text = sprintf("Neuer User %s %s hat sich registriert.", $user->getVorname(), $user->getNachname());
         $activateMail_betreff = 'Neue Anmeldung im Planungskosmos';
         sendMail('burns@anderswe.lt', $activateMail_betreff, $activateMail_text, 'burns@anderswe.lt', 'Anderswelt Planungskosmos');
       }
@@ -40,6 +42,7 @@ if(isset($_GET['id']) && isset($_GET['token'])) {
   }
 }
 
+//TODO: Auslagern
 function validatedToken($input, $token) {
   $calc = hash('sha256', hex2bin($input));
 
