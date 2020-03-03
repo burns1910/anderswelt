@@ -76,7 +76,22 @@ class UserDAO {
       $query->bindParam("email", $email, PDO::PARAM_STR);
       $query->bindParam("pw_hash", $pw_hash, PDO::PARAM_STR);
       $query->execute();
-      $updated = $this->connection->rowCount();
+      $updated = $query->rowCount();
+      return $updated;
+    } catch(PDOException $e) {
+      $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
+      return 0;
+    }
+  }
+
+//TODO: Service Layer für kombinierte Hilfsmethoden implementieren
+  public function updatePWByMail($email, $pw_hash) {
+    try {
+      $query = $this->connection->prepare("UPDATE user SET pw_hash=:pw_hash WHERE email=:email");
+      $query->bindParam("email", $email, PDO::PARAM_STR);
+      $query->bindParam("pw_hash", $pw_hash, PDO::PARAM_STR);
+      $query->execute();
+      $updated = $query->rowCount();
       return $updated;
     } catch(PDOException $e) {
       $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
@@ -89,7 +104,7 @@ class UserDAO {
       $query = $this->connection->prepare("DELETE FROM users WHERE id=:id");
       $query->bindParam("id", $id, PDO::PARAM_STR);
       $query->execute();
-      $deleted = $this->connection->rowCount();
+      $deleted = $query->rowCount();
       return $deleted;
     } catch(PDOException $e) {
       $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
@@ -121,20 +136,6 @@ class UserDAO {
     }
     catch (PDOException $e) {
       $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
-    }
-  }
-
-  public function updatePWByMail($email, $pw_hash) {
-    try {
-      $query = $this->connection->prepare("UPDATE user SET PW_HASH=:pw_hash WHERE email=:email");
-      $query->bindParam("pw_hash", $pw_hash, PDO::PARAM_STR);
-      $query->bindParam("email", $email, PDO::PARAM_STR);
-      $query->execute();
-      $updated = $this->connection->rowCount();
-      return $updated;
-    } catch(PDOException $e) {
-      $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
-      return 0;
     }
   }
 

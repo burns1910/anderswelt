@@ -28,7 +28,7 @@ if (isset($_POST['register'])) {
     $errors = true;
   }
 
-  if($dao->doesUserExist($email) == true) {
+  if($dao->doesUserExist($email)) {
     $_SESSION['error_msg'] = 'Diese E-Mail wurde bereits registriert.';
     $errors = true;
   }

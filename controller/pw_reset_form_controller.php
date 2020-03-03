@@ -1,6 +1,10 @@
 <?php
-include 'pw_reset_controller.php';
-include 'user_controller.php';
+include 'ResetDAO.php';
+include 'UserDAO.php';
+$connection = $database->getConnection();
+$userDAO = new UserDAO($connection);
+$resetDAO = new ResetDAO($connection);
+
 include 'mail_controller.php';
 
 
@@ -8,7 +12,7 @@ include 'mail_controller.php';
     $errors = false;
     $email = $_POST['email'];
 
-    if(doesUserExist($email) && filter_var($email,FILTER_VALIDATE_EMAIL)) { //Wenn user Existiert und eine gültige Eingabe vorliegt
+    if($userDAO->doesUserExist($email) && filter_var($email,FILTER_VALIDATE_EMAIL)) { //Wenn user Existiert und eine gültige Eingabe vorliegt
         // Create tokens
         $selector = bin2hex(random_bytes(8));
         $token = random_bytes(32);
@@ -23,8 +27,8 @@ include 'mail_controller.php';
         $timestamp = time()+60*60*24; //Aktueller Timestamp +24 Std
         $token_expire_date = date('Y-m-d H:i:s',$timestamp);
 
-        deleteTokenByEMail($email);
-        addToken($email, $selector, $hash, $token_expire_date);
+        $resetDAO->deleteTokenByEMail($email);
+        $resetDAO->addToken($email, $selector, $hash, $token_expire_date);
 
         $resetMail_text = 'Moin,<br /><br />';
         $resetMail_text .= 'jemensch (wahrscheinlich du), hat versucht dein Password zur&uuml;ckzusetzen. Um diesen Vorgang abzuschließen, klicke auf folgenden Link:<br /><br />';
