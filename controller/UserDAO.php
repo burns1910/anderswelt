@@ -12,7 +12,7 @@ class UserDAO {
 
   public function getUserByID($id) {
     try {
-      $query = $connection->prepare("SELECT * FROM user WHERE id=:id");
+      $query = $this->connection->prepare("SELECT * FROM user WHERE id=:id");
       $query->bindParam("id", $id, PDO::PARAM_STR);
       $query->execute();
       $query->setFetchMode(PDO::FETCH_CLASS, "User");
@@ -38,7 +38,7 @@ class UserDAO {
 
   public function getAllUsers() {
     try {
-      $query = $connection->prepare("SELECT u.id, u.vorname, u.nachname, u.email, r.name as role FROM user u LEFT JOIN roles r ON u.role_id=r.id");
+      $query = $this->connection->prepare("SELECT u.id, u.vorname, u.nachname, u.email, r.name as role FROM user u LEFT JOIN roles r ON u.role_id=r.id");
       $query->execute();
       $query->setFetchMode(PDO::FETCH_CLASS, "User");
       return $obj = $query->fetchAll();
@@ -50,7 +50,7 @@ class UserDAO {
 
   public function addUser($vorname, $nachname, $email, $token, $pw_hash, $token_expire_date) {
     try {
-      $query = $connection->prepare("INSERT INTO user(VORNAME,NACHNAME,EMAIL,TOKEN,PW_HASH,TOKEN_EXPIRE_DATE) VALUES (:vorname,:nachname,:email,:token,:pw_hash,:token_expire_date)");
+      $query = $this->connection->prepare("INSERT INTO user(VORNAME,NACHNAME,EMAIL,TOKEN,PW_HASH,TOKEN_EXPIRE_DATE) VALUES (:vorname,:nachname,:email,:token,:pw_hash,:token_expire_date)");
       $query->bindParam("vorname", $vorname, PDO::PARAM_STR);
       $query->bindParam("nachname", $nachname, PDO::PARAM_STR);
       $query->bindParam("email", $email, PDO::PARAM_STR);
@@ -58,7 +58,7 @@ class UserDAO {
       $query->bindParam("pw_hash", $pw_hash, PDO::PARAM_STR);
       $query->bindParam("token_expire_date", $token_expire_date, PDO::PARAM_STR);
       $query->execute();
-      $id = $connection->lastInsertID();
+      $id = $this->connection->lastInsertID();
       return $id;
     } catch(PDOException $e) {
       $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
@@ -68,7 +68,7 @@ class UserDAO {
 
   function updateUser($id, $role_id, $vorname, $nachname, $email, $pw_hash) {
     try {
-      $query = $connection->prepare("UPDATE user SET role_id =:role_id, vorname =:vorname, nachname=:nachname, email=:email, pw_hash=:pw_hash WHERE id = :id");
+      $query = $this->connection->prepare("UPDATE user SET role_id =:role_id, vorname =:vorname, nachname=:nachname, email=:email, pw_hash=:pw_hash WHERE id = :id");
       $query->bindParam("id", $id, PDO::PARAM_STR);
       $query->bindParam("role_id", $role_id, PDO::PARAM_STR);
       $query->bindParam("vorname", $vorname, PDO::PARAM_STR);
@@ -76,7 +76,7 @@ class UserDAO {
       $query->bindParam("email", $email, PDO::PARAM_STR);
       $query->bindParam("pw_hash", $pw_hash, PDO::PARAM_STR);
       $query->execute();
-      $updated = $connection->rowCount();
+      $updated = $this->connection->rowCount();
       return $updated;
     } catch(PDOException $e) {
       $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
@@ -86,10 +86,10 @@ class UserDAO {
 
   public function deleteUser($id) {
     try {
-      $query = $connection->prepare("DELETE FROM users WHERE id=:id");
+      $query = $this->connection->prepare("DELETE FROM users WHERE id=:id");
       $query->bindParam("id", $id, PDO::PARAM_STR);
       $query->execute();
-      $deleted = $connection->rowCount();
+      $deleted = $this->connection->rowCount();
       return $deleted;
     } catch(PDOException $e) {
       $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
@@ -98,12 +98,14 @@ class UserDAO {
   }
 
   public function doesUserExist($email) {
-    $userExists = 0;
+    $userExists = false;
     try {
-      $query = $connection->prepare("SELECT 1 FROM user WHERE EMAIL=:email");
+      $query = $this->connection->prepare("SELECT 1 FROM user WHERE EMAIL=:email");
       $query->bindParam("email", $email, PDO::PARAM_STR);
       $query->execute();
-      $userExists = $query->fetchColumn();
+      if(strcmp($query->fetchColumn(), "1") == 0) {
+        $userExists = true;
+      }
     }
     catch (PDOException $e) {
       $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
@@ -113,7 +115,7 @@ class UserDAO {
 
   public function verifyEmail($email) {
     try {
-      $query = $connection->prepare("UPDATE user SET mail_verified='1' WHERE EMAIL=:email");
+      $query = $this->connection->prepare("UPDATE user SET mail_verified='1' WHERE EMAIL=:email");
       $query->bindParam("email", $email, PDO::PARAM_STR);
       $query->execute();
     }
@@ -124,11 +126,11 @@ class UserDAO {
 
   public function updatePWByMail($email, $pw_hash) {
     try {
-      $query = $connection->prepare("UPDATE user SET PW_HASH=:pw_hash WHERE email=:email");
+      $query = $this->connection->prepare("UPDATE user SET PW_HASH=:pw_hash WHERE email=:email");
       $query->bindParam("pw_hash", $pw_hash, PDO::PARAM_STR);
       $query->bindParam("email", $email, PDO::PARAM_STR);
       $query->execute();
-      $updated = $connection->rowCount();
+      $updated = $this->connection->rowCount();
       return $updated;
     } catch(PDOException $e) {
       $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";

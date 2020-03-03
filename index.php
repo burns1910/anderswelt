@@ -3,7 +3,8 @@ include 'config.php';
 include './controller/login_form_controller.php';
 include 'header.php';
 include 'menu.php';
-if(!$logged_in_admin) {
+if(!isset($_SESSION['user_id'])) {
+
 ?>
 
     <div class="container">

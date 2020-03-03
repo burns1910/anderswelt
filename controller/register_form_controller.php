@@ -1,7 +1,9 @@
 <?php
-include 'user_controller.php';
-include 'mail_controller.php';
+include 'UserDAO.php';
+$connection = $database->getConnection();
+$dao = new UserDAO($connection);
 
+include 'mail_controller.php';
 
 if (isset($_POST['register'])) {
 
@@ -13,9 +15,10 @@ if (isset($_POST['register'])) {
   $token = random_bytes(50);
   $token_hash = hash('sha256', $token);
   $pw_hash = password_hash($password, PASSWORD_BCRYPT);
-  $errors = false;
   $timestamp = time()+60*60*24; //Aktueller Timestamp +24 Std
   $token_expire_date = date('Y-m-d H:i:s',$timestamp);
+
+  $errors = false;
 
   if (!filter_var($_POST['email'],FILTER_VALIDATE_EMAIL)) {
     $_SESSION['error_msg'] = 'Bitte gib eine g&uuml;ltige E-Mail Adresse ein.';
@@ -25,13 +28,13 @@ if (isset($_POST['register'])) {
     $errors = true;
   }
 
-  if(doesUserExist($email) == true) {
+  if($dao->doesUserExist($email) == true) {
     $_SESSION['error_msg'] = 'Diese E-Mail wurde bereits registriert.';
     $errors = true;
   }
 
   if(!$errors) {
-      $user_id = addUser($vorname, $nachname, $email, $token_hash, $pw_hash, $token_expire_date);
+      $user_id = $dao->addUser($vorname, $nachname, $email, $token_hash, $pw_hash, $token_expire_date);
       if($user_id!=0) {
       $url = sprintf('%sverify_user.php?%s', "https://planung.anderswe.lt/", http_build_query([
         'id' => $user_id,
@@ -49,5 +52,6 @@ if (isset($_POST['register'])) {
       $_SESSION['error_msg'] = 'User konnte nicht angelegt werden.';
     }
   }
+
 }
 ?>
