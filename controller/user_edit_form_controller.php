@@ -1,7 +1,7 @@
 <?php
-include 'user_controller.php';
-
-
+include BASE_PATH.'/controller/UserDAO.php';
+$connection = $database->getConnection();
+$dao = new UserDAO($connection);
 
 if (isset($_POST['edit-user'])) {
 
@@ -10,8 +10,8 @@ if (isset($_POST['edit-user'])) {
     $nachname = $_POST['nachname'];
     $role_id = $_POST['rolle'];
 
-    $user = updateUser($id, $role_id, $vorname, $nachname);
-    if($role_id!=0) {
+    $user = $dao->updateUser($id, $role_id, $vorname, $nachname);
+    if($user!=0) {
         $_SESSION['success_msg'] = 'User '.$vorname.' '.$nachname.' wurde erfolgreich ge&auml;ndert.';
     } else {
         $_SESSION['error_msg'] = 'Irgendwas ist schief gelaufen :/';
