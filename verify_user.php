@@ -1,11 +1,11 @@
 <?php
 include 'config.php';
-include './controller/UserDAO.php';
+include BASE_PATH.'/controller/UserDAO.php';
 $connection = $database->getConnection();
 $userDAO = new UserDAO($connection);
-include './controller/mail_controller.php';
-include 'header.php';
-include 'menu.php';
+include BASE_PATH.'/controller/mail_controller.php';
+include BASE_PATH.'/header.php';
+include BASE_PATH.'/menu.php';
 
 $tokenChecked = false;
 if(isset($_GET['id']) && isset($_GET['token'])) {
@@ -54,6 +54,5 @@ function validatedToken($input, $token) {
     return false;
   }
 }
-include 'messages.php';
-include 'footer.php';
+include BASE_PATH.'/footer.php';
 ?>

@@ -1,8 +1,8 @@
 <?php
 include 'config.php';
-include './controller/pw_reset_form_controller.php';
-include 'header.php';
-include 'menu.php';
+include BASE_PATH.'/controller/pw_reset_form_controller.php';
+include BASE_PATH.'/header.php';
+include BASE_PATH.'/menu.php';
 
 ?>
 		<div class="container">
@@ -20,4 +20,4 @@ include 'menu.php';
 				</div>
 			</div>
 		</div>
-<?php include 'footer.php'; ?>
+<?php include BASE_PATH.'/footer.php'; ?>

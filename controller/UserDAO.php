@@ -1,6 +1,6 @@
 <?php
 
-include 'model/User.php';
+include BASE_PATH.'/model/User.php';
 
 class UserDAO {
 

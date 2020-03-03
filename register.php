@@ -1,8 +1,8 @@
 <?php
 include 'config.php';
-include './controller/register_form_controller.php';
-include 'header.php';
-include 'menu.php';
+include BASE_PATH.'/controller/register_form_controller.php';
+include BASE_PATH.'/header.php';
+include BASE_PATH.'/menu.php';
 
 ?>
     <div class="container">
@@ -38,4 +38,4 @@ include 'menu.php';
       </div>
     </div>
 
-<?php include 'footer.php'; ?>
+<?php include BASE_PATH.'/footer.php'; ?>

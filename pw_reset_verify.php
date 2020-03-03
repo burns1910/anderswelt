@@ -1,8 +1,8 @@
 <?php
 include 'config.php';
-include './controller/pw_reset_verify_form_controller.php';
-include 'header.php';
-include 'menu.php';
+include BASE_PATH.'/controller/pw_reset_verify_form_controller.php';
+include BASE_PATH.'/header.php';
+include BASE_PATH.'/menu.php';
 
 
 if($tokenChecked) {
@@ -30,4 +30,4 @@ if($tokenChecked) {
 
 <?php
 }
-include 'footer.php'; ?>
+include BASE_PATH.'/footer.php'; ?>

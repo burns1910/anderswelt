@@ -1,10 +1,12 @@
 <?php
 include '../config.php';
-include '../controller/user_controller.php';
-include '../header.php';
-include '../menu.php';
+include BASE_PATH.'/controller/UserDAO.php';
+include BASE_PATH.'/header.php';
+include BASE_PATH.'/menu.php';
+$connection = $database->getConnection();
+$dao = new UserDAO($connection);
 
-if(!$logged_in_admin) {
+if(!isset($_SESSION['user_id'])) {
 ?>
 
   <p>Willkommen beim Burns-System</p>
@@ -15,9 +17,10 @@ if(!$logged_in_admin) {
 else {
 ?>
   <div class="container">
-    <h2>User</h2>
-    <table class="table">
-      <thead class="thead-primary">
+    <?php include '../messages.php' ?>
+    <h2>Users</h2>
+    <table class="table table-hover">
+      <thead class="thead-dark">
         <tr>
           <th>ID</th>
           <th>Vorname</th>
@@ -48,5 +51,5 @@ else {
     echo "    </table>\n";
     echo "  </div>\n";
 }
-include '../footer.php';
+include BASE_PATH.'/footer.php';
 ?>

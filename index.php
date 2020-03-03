@@ -1,8 +1,8 @@
 <?php
 include 'config.php';
-include './controller/login_form_controller.php';
-include 'header.php';
-include 'menu.php';
+include(BASE_PATH.'/controller/login_form_controller.php');
+include(BASE_PATH.'/header.php');
+include(BASE_PATH.'/menu.php');
 if(!isset($_SESSION['user_id'])) {
 
 ?>
@@ -44,5 +44,5 @@ else {
   </div>
 <?php
 }
-include 'footer.php';
+include(BASE_PATH.'/footer.php');
 ?>
