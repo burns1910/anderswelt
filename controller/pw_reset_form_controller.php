@@ -1,6 +1,6 @@
 <?php
-include 'ResetDAO.php';
-include 'UserDAO.php';
+include BASE_PATH.'/dao/ResetDAO.php';
+include BASE_PATH.'/dao/UserDAO.php';
 $connection = $database->getConnection();
 $userDAO = new UserDAO($connection);
 $resetDAO = new ResetDAO($connection);

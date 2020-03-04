@@ -1,6 +1,10 @@
 <?php
 include 'role_controller.php';
 
+if (isset($_POST['listRoles'])) {
+  getAllRolesAsTable();
+}
+
 if (isset($_POST['add-role'])) {
 
     $name = $_POST['name'];

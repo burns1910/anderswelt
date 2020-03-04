@@ -77,33 +77,5 @@ class PermissionDAO {
     }
   }
 
-/*    function getAllRolesAsTable() {
-      global $connection;
-      $roleData = array();
-      $numRows = 0;
-      $sql = "SELECT COUNT(*) FROM roles";
-      if ($res = $connection->query($sql)) {
-        $numRows = $res->fetchColumn();
-        if ($numRows > 0) {
-          $sql = "SELECT * FROM roles";
-          foreach ($connection->query($sql) as $role) {
-            $roleRows = array();
-            $roleRows[] = $role['id'];
-            $roleRows[] = $role['name'];
-            $roleRows[] = '<button type="button" name="update" id="'.$role["id"].'" class="btn btn-warning btn-xs update">Update</button>';
-            $roleRows[] = '<button type="button" name="delete" id="'.$role["id"].'" class="btn btn-danger btn-xs delete" >Delete</button>';
-            $roleData[] = $roleRows;
-          }
-        }
-      }
-      $output = array(
-      //  "draw"				=>	intval($_POST["draw"]),
-        "recordsTotal"  	=>  $numRows,
-        "recordsFiltered" 	=> 	$numRows,
-        "data"    			=> 	$roleData
-      );
-      echo json_encode($output);
-    }
-*/
 }
 ?>
