@@ -1,9 +1,9 @@
 <?php
 include 'config.php';
-include BASE_PATH.'/controller/UserDAO.php';
+include BASE_PATH.'/persistence/dao/UserDAO.php';
 $connection = $database->getConnection();
 $userDAO = new UserDAO($connection);
-include BASE_PATH.'/controller/mail_controller.php';
+include BASE_PATH.'/persistence/controller/mail_controller.php';
 include BASE_PATH.'/header.php';
 include BASE_PATH.'/menu.php';
 

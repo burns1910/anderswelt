@@ -1,6 +1,6 @@
 <?php
 
-include BASE_PATH.'/model/Role.php';
+include BASE_PATH.'/persistence/model/Role.php';
 
 class RoleDAO {
 

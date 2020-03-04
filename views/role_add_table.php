@@ -15,7 +15,7 @@ if(!$logged_in_admin) {
 else {
 ?>
   <div class="container">
-    <?php include '../messages.php' ?>
+    <?php include '../utils/messages.php' ?>
     <h2>Roles</h2>
     <button type="button" name="add" id="addRole" class="btn btn-success btn-xs">Rolle hinzuf&uuml;gen</button>
     <table id="roleList" class="table table-hover">

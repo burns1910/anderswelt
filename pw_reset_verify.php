@@ -1,6 +1,6 @@
 <?php
 include 'config.php';
-include BASE_PATH.'/controller/pw_reset_verify_form_controller.php';
+include BASE_PATH.'/persistence/controller/pw_reset_verify_form_controller.php';
 include BASE_PATH.'/header.php';
 include BASE_PATH.'/menu.php';
 
@@ -12,7 +12,7 @@ if($tokenChecked) {
     <div class="container">
       <div class="row">
         <div class="col-md-4 col-md-offset-4">
-          <?php include 'messages.php'; ?>
+          <?php include 'utils/messages.php'; ?>
           <form method="post" action="">
       	    <input type="hidden" name="selector" value="<?php echo $selector; ?>">
       	    <input type="hidden" name="validator" value="<?php echo $validator; ?>">

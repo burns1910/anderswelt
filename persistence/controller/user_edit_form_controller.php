@@ -1,5 +1,5 @@
 <?php
-include BASE_PATH.'/controller/UserDAO.php';
+include BASE_PATH.'/persistence/controller/UserDAO.php';
 $connection = $database->getConnection();
 $dao = new UserDAO($connection);
 

@@ -1,6 +1,6 @@
 <?php
 include 'config.php';
-include(BASE_PATH.'/controller/login_form_controller.php');
+include(BASE_PATH.'/persistence/controller/login_form_controller.php');
 include(BASE_PATH.'/header.php');
 include(BASE_PATH.'/menu.php');
 if(!isset($_SESSION['user_id'])) {
@@ -10,7 +10,7 @@ if(!isset($_SESSION['user_id'])) {
     <div class="container">
       <div class="row">
         <div class="col-md-4 col-md-offset-4">
-          <?php include 'messages.php' ?>
+          <?php include 'utils/messages.php' ?>
           <form method="post" action="" name="signin-form" class="mb-4">
             <h2 class="text-center">Login</h2>
             <hr>

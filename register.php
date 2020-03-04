@@ -1,6 +1,6 @@
 <?php
 include 'config.php';
-include BASE_PATH.'/controller/register_form_controller.php';
+include BASE_PATH.'/persistence/controller/register_form_controller.php';
 include BASE_PATH.'/header.php';
 include BASE_PATH.'/menu.php';
 
@@ -9,7 +9,7 @@ include BASE_PATH.'/menu.php';
       <div class="row">
         <div class="col-md-4 col-md-offset-4">
           <form method="post" action="" name="signup-form" class="needs-validation" novalidate>
-            <?php include 'messages.php' ?>
+            <?php include 'utils/messages.php' ?>
             <h2 class="text-center">Register</h2>
             <hr>
             <div class="form-group">

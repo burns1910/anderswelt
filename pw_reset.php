@@ -1,6 +1,6 @@
 <?php
 include 'config.php';
-include BASE_PATH.'/controller/pw_reset_form_controller.php';
+include BASE_PATH.'/persistence/controller/pw_reset_form_controller.php';
 include BASE_PATH.'/header.php';
 include BASE_PATH.'/menu.php';
 
@@ -8,7 +8,7 @@ include BASE_PATH.'/menu.php';
 		<div class="container">
 			<div class="row">
 				<div class="col-md-4 col-md-offset-4">
-					<?php include 'messages.php'; ?>
+					<?php include 'utils/messages.php'; ?>
 					<form method="post" action="">
 						<h2 class="text-center">Passwort zur&uuml;cksetzen</h2>
 						<hr>

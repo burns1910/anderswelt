@@ -1,7 +1,7 @@
 <?php
 include '../config.php';
-include BASE_PATH.'/dao/UserDAO.php';
-include BASE_PATH.'/dao/RoleDAO.php';
+include BASE_PATH.'/persistence/dao/UserDAO.php';
+include BASE_PATH.'/persistence/dao/RoleDAO.php';
 include BASE_PATH.'/header.php';
 include BASE_PATH.'/menu.php';
 $connection = $database->getConnection();
@@ -21,7 +21,7 @@ else {
 
 ?>
   <div class="container">
-    <?php include '../messages.php' ?>
+    <?php include '../utils/messages.php' ?>
     <h2>Users</h2>
     <table class="table table-hover">
       <thead class="thead-dark">

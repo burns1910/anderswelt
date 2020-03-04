@@ -30,7 +30,7 @@ else {
         </div>
         <div class="col-xl-10">
 <?php
-        include '../messages.php';
+        include '../utils/messages.php';
         echo '          <h4 class="mb-4">Folgende Veranstaltungen stehen bevor:</h4>'."\n";
     $veranstaltungen = getAnstehendeVA();
     if($veranstaltungen!=null) {

@@ -1,6 +1,6 @@
 <?php
 
-include BASE_PATH.'/model/Permission.php';
+include BASE_PATH.'/persistence/model/Permission.php';
 
 class PermissionDAO {
 

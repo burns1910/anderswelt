@@ -1,6 +1,6 @@
 <?php
 
-include 'model/ResetToken.php';
+include BASE_PATH.'/persistence/model/ResetToken.php';
 
 class ResetDAO {
 
