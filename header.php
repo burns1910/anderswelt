@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="/anderswelt/css/style-purple.css" />
     <link rel="stylesheet" href="/anderswelt/css/style_base.css" media="screen" />
     <script src="https://kit.fontawesome.com/cb1ea7256d.js"></script>
-    <script src="/anderswelt/css/jquery-3.4.1.js"></script>
-    <script src="/anderswelt/css/bootstrap.bundle.js"></script>
+    <script src="/anderswelt/js/jquery-3.4.1.js"></script>
+    <script src="/anderswelt/js/bootstrap.bundle.js"></script>
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   </head>
