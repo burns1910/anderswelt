@@ -1,10 +1,12 @@
 <?php
 include '../config.php';
-include BASE_PATH.'/controller/UserDAO.php';
+include BASE_PATH.'/dao/UserDAO.php';
+include BASE_PATH.'/dao/RoleDAO.php';
 include BASE_PATH.'/header.php';
 include BASE_PATH.'/menu.php';
 $connection = $database->getConnection();
-$dao = new UserDAO($connection);
+$userDao = new UserDAO($connection);
+$roleDao = new RoleDAO($connection);
 
 if(!isset($_SESSION['user_id'])) {
 ?>
@@ -15,6 +17,8 @@ if(!isset($_SESSION['user_id'])) {
 <?php
 }
 else {
+  $allUsers = $userDao->getAllUsers();
+
 ?>
   <div class="container">
     <?php include '../messages.php' ?>
@@ -31,19 +35,21 @@ else {
       </thead>
       <tbody>
   <?php
-    $allUsers = getAllUsers();
     if(!is_null($allUsers)) {
       foreach ($allUsers as $user) {
-        $id = $user['id'];
+        $id = $user->getId();
+        $vorname = $user->getVorname();
+        $nachname = $user->getNachname();
+        $email = $user->getEmail();
+        $role_id = $user->getRoleId();
+        $rolename = $user->role;
         echo "        <tr>\n";
-        foreach ($user as $key => $value) {
-          /*
-          if($key == 'id') {
-            continue;
-          } */
-          echo "          <td>$value</td>\n";
-        }
-        echo '            <td><a href="user_edit.php?id='.$id.'">bearbeiten</a></td>'."\n";
+        echo "          <td>$id</td>\n";
+        echo "          <td>$vorname</td>\n";
+        echo "          <td>$nachname</td>\n";
+        echo "          <td>$email</td>\n";
+        echo "          <td>$rolename</td>\n";
+        echo '          <td><a href="user_edit.php?id='.$id.'">bearbeiten</a></td>'."\n";
         echo "        </tr>\n";
       }
     }

@@ -4,7 +4,7 @@ class Role {
 /*----------- Properties ----------------*/
 
   private $id;
-  private $name
+  private $name;
   private $description;
 
 /*----------- Getters ----------------*/
