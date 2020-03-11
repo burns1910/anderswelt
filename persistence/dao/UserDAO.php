@@ -20,6 +20,7 @@ class UserDAO {
     }
     catch(PDOException $e) {
       $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
+      return 0;
     }
   }
 
@@ -33,6 +34,7 @@ class UserDAO {
     }
     catch(PDOException $e) {
       $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
+      return 0;
     }
   }
 
@@ -45,6 +47,7 @@ class UserDAO {
     }
     catch(PDOException $e) {
       $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
+      return 0;
     }
   }
 

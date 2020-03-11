@@ -31,6 +31,8 @@ else {
           <th>Nachname</th>
           <th>E-Mail</th>
           <th>Rolle</th>
+          <th></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -50,6 +52,7 @@ else {
         echo "          <td>$email</td>\n";
         echo "          <td>$rolename</td>\n";
         echo '          <td><a href="user_edit.php?id='.$id.'">bearbeiten</a></td>'."\n";
+        echo '          <td><a href="user_edit.php?id='.$id.'">l&ouml;schen</a></td>'."\n";
         echo "        </tr>\n";
       }
     }

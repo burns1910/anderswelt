@@ -1,11 +1,13 @@
 <?php
 include '../config.php';
-include '../controller/user_edit_form_controller.php';
-include '../controller/role_controller.php';
+include BASE_PATH.'/persistence/controller/user_edit_form_controller.php';
+include BASE_PATH.'/persistence/dao/RoleDAO.php';
 include '../header.php';
 include '../menu.php';
 
-if(!$logged_in_admin) {
+$roleDao = new RoleDAO($connection);
+
+if(!isset($_SESSION['user_id'])) {
 
     ?>
 
@@ -18,47 +20,57 @@ if(!$logged_in_admin) {
 else {
 
     if (isset($_GET['id'])) {
-        $user = getUserByID($_GET['id']);
-        if ($user != 0) {
-            $id = $user['id'];
-            $vorname = $user['vorname'];
-            $nachname = $user['nachname'];
-            $rolle_id = $user['role_id'];
-            $rolle_name = getRoleNameByID($rolle_id);
-            $alleRollen = getAllRoles();
+        $user = $userDao->getUserById($_GET['id']);
+        if ((isset($user)) and ($user instanceof User)) {
+            $id = $user->getId();
+            $vorname = $user->getVorname();
+            $nachname = $user->getNachname();
+            $rolle_id = $user->getRoleId();
+            $rolle = $roleDao->getRoleById($rolle_id);
+            if ((isset($rolle)) and ($rolle instanceof Rolle)) {
+              $rolle_name = $rolle->getName();
+            }
+            $alleRollen = $roleDao->getAllRoles();
 
             ?>
-            <form method="post" action="" name="role-update-form">
-                <div class="form-element">
-                    <label>Name</label>
-                    <input type="text" name="vorname" value="<?php echo $vorname ?>" required/>
-                </div>
-                <div class="form-element">
-                    <label>Name</label>
-                    <input type="text" name="nachname" value="<?php echo $nachname ?>" required/>
-                </div>
-                <div class="form-element">
-                    <label>Rolle</label>
-                    <select name="rolle">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                  <?php include BASE_PATH.'/utils/messages.php' ?>
+                  <form method="post" action="" name="user-update-form" class="mb-4 needs-validation" novalidate>
+                    <div class="form-group">
+                      <label for="inputVorname">Vorname</label>
+                      <input type="text" class="form-control" id="inputVorname" name="vorname" value="<?php echo $vorname ?>" required/>
+                    </div>
+                    <div class="form-group">
+                      <label for="inputName">Name</label>
+                      <input type="text" class="form-control" id="inputName" name="nachname" value="<?php echo $nachname ?>" required/>
+                    </div>
+                    <div class="form-group">
+                      <label for="inputRolle">Rolle</label>
+                      <select class="form-control" id="inputRolle" name="rolle">
                         <?php
                         foreach ($alleRollen as $r) {
-                            $r_id = $r['id'];
-                            $r_name = $r['name'];
-                            if(strcmp($r_id, $rolle_id) == 0) {
-                                echo '<option value="'.$r_id.'" selected>'.$r_name.'</option>';
-                            } else {
-                                echo '<option value="'.$r_id.'">'.$r_name.'</option>';
-                            }
+                          $r_id = $r->getId();
+                          $r_name = $r->getName();
+                          if(strcmp($r_id, $rolle_id) == 0) {
+                            echo '<option value="'.$r_id.'" selected>'.$r_name.'</option>';
+                          } else {
+                            echo '<option value="'.$r_id.'">'.$r_name.'</option>';
+                          }
                         }
                         ?>
-                    </select>
+                      </select>
+                    </div>
+                    <input type="hidden" name="id" value="<?php echo $id; ?>">
+                    <button type="submit" class="btn btn-primary" name="edit-user" value="edit-user">&Auml;ndern</button>
+                  </form>
                 </div>
-                <input type="hidden" name="id" value="<?php echo $id; ?>">
-                <button type="submit" name="edit-user" value="edit-user">&Auml;ndern</button>
-            </form>
+              </div>
+            </div>
             <?php
         } else {
-            $message = '<p class="aw-error-message">Irgendwas ist schief gelaufen</p><br />';
+            $_SESSION['error_msg'] = 'Irgendwas ist schief gelaufen.';
         }
     }
 }

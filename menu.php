@@ -14,10 +14,10 @@
             <a class="nav-link" href="/anderswelt/views/user_table.php"><i class="fas fa-comments"></i> User</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/anderswelt/views/role_add_table.php"><i class="fas fa-comments"></i> Rollen</a>
+            <a class="nav-link" href="/anderswelt/views/role_table.php"><i class="fas fa-comments"></i> Rollen</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/anderswelt/views/permission_add_table.php"><i class="fas fa-comments"></i> Berechtigungen</a>
+            <a class="nav-link" href="/anderswelt/views/permission_table.php"><i class="fas fa-comments"></i> Berechtigungen</a>
           </li>
           <li class="nav-item">
             <a class="nav-link disabled" href="#">Keine Berechtigung</a>

@@ -4,7 +4,7 @@ class Permission {
 /*----------- Properties ----------------*/
 
   private $id;
-  private $name
+  private $name;
   private $description;
 
 /*----------- Getters ----------------*/

@@ -1,5 +1,7 @@
 <?php
-include 'role_controller.php';
+include BASE_PATH.'/persistence/dao/RoleDAO.php';
+$connection = $database->getConnection();
+$roleDao = new RoleDAO($connection);
 
 if (isset($_POST['listRoles'])) {
   getAllRolesAsTable();
@@ -19,12 +21,11 @@ if (isset($_POST['add-role'])) {
 }
 
 if (isset($_POST['edit-role'])) {
-
     $id = $_POST['id'];
     $name = $_POST['name'];
     $description = $_POST['description'];
 
-    $role_id = updateRole($id, $name, $description);
+    $role_id = $roleDao->updateRole($id, $name, $description);
     if($role_id!=0) {
         $_SESSION['success_msg'] = 'Rolle '.$name.' wurde erfolgreich ge&auml;ndert.';
     } else {

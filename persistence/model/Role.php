@@ -6,6 +6,7 @@ class Role {
   private $id;
   private $name;
   private $description;
+  private $permissions;
 
 /*----------- Getters ----------------*/
 
@@ -21,15 +22,29 @@ class Role {
     return $this->description;
   }
 
+  public function getPermissions() {
+    return $this->permissions;
+  }
+
 /*----------- Setters ----------------*/
 
-  public function setVorname($name) {
+  public function setName($name) {
     $this->name = $name;
   }
 
-  public function setNachname($description) {
+  public function setDescription($description) {
     $this->description = $description;
   }
 
+  public function setPermission($permission) {
+    $this->permissions[] = $permission;
+  }
+
+  public function removePermission($permission) {
+    $key = array_search($permission, $this->permissions);
+    unset($this->permissions[$key]);
+  }
+
 }
+
 ?>
