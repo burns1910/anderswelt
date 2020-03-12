@@ -24,12 +24,17 @@ if (isset($_POST['edit-role'])) {
     $id = $_POST['id'];
     $name = $_POST['name'];
     $description = $_POST['description'];
-
     $role_id = $roleDao->updateRole($id, $name, $description);
+    if(isset($_POST['permissions']) && !empty($_POST['permissions'])) {
+      if ( array_key_exists('permissions', $_POST)) {
+        $permissions = $_POST['permissions'];
+      }
+    } else {
+      $permissions = array();
+    }
+    $roleDao->updatePermissions($id, $permissions);
     if($role_id!=0) {
         $_SESSION['success_msg'] = 'Rolle '.$name.' wurde erfolgreich ge&auml;ndert.';
-    } else {
-        $_SESSION['error_msg'] = 'Irgendwas ist schief gelaufen :/';
     }
 }
 

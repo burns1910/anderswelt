@@ -27,6 +27,7 @@ else {
             $name = $rolle->getName();
             $description = $rolle->getDescription();
             $allPermissions = $permissionDao->getAllPermissions();
+            $allPermissionsOfRole = $roleDao->getPermissionIDsFromRole($id);
 
             ?>
             <div class="container">
@@ -44,16 +45,16 @@ else {
                     </div>
                     <div class="form-group">
                       <label for="inputPermissions">Berechtigungen</label>
-                      <select multiple class="form-control" id="inputPermissions">
+                      <select multiple class="form-control" id="inputPermissions" name="permissions[]">
                         <?php
                         foreach ($allPermissions as $p) {
                           $p_id = $p->getId();
                           $p_name = $p->getName();
-                          //if(strcmp($r_id, $rolle_id) == 0) {
-                          //  echo '<option value="'.$r_id.'" selected>'.$r_name.'</option>';
-                          //} else {
+                          if(in_array($p_id, $allPermissionsOfRole)) {
+                            echo '<option value="'.$p_id.'" selected>'.$p_name.'</option>';
+                          } else {
                             echo '<option value="'.$p_id.'">'.$p_name.'</option>';
-                          //}
+                          }
                         }
                         ?>
                       </select>

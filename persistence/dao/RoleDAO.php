@@ -77,33 +77,76 @@ class RoleDAO {
     }
   }
 
-/*    function getAllRolesAsTable() {
-      global $connection;
-      $roleData = array();
-      $numRows = 0;
-      $sql = "SELECT COUNT(*) FROM roles";
-      if ($res = $connection->query($sql)) {
-        $numRows = $res->fetchColumn();
-        if ($numRows > 0) {
-          $sql = "SELECT * FROM roles";
-          foreach ($connection->query($sql) as $role) {
-            $roleRows = array();
-            $roleRows[] = $role['id'];
-            $roleRows[] = $role['name'];
-            $roleRows[] = '<button type="button" name="update" id="'.$role["id"].'" class="btn btn-warning btn-xs update">Update</button>';
-            $roleRows[] = '<button type="button" name="delete" id="'.$role["id"].'" class="btn btn-danger btn-xs delete" >Delete</button>';
-            $roleData[] = $roleRows;
-          }
-        }
+  public function getPermissionIDsFromRole($roleId) {
+    try {
+      $query = $this->connection->prepare("SELECT permission_id FROM permission_role WHERE role_id=:roleId");
+      $query->bindParam("roleId", $roleId, PDO::PARAM_STR);
+      $query->execute();
+      $query->setFetchMode(PDO::FETCH_NUM);
+      $retVal = array();
+      while($obj = $query->fetch()) {
+        $retVal[] = $obj[0];
       }
-      $output = array(
-      //  "draw"				=>	intval($_POST["draw"]),
-        "recordsTotal"  	=>  $numRows,
-        "recordsFiltered" 	=> 	$numRows,
-        "data"    			=> 	$roleData
-      );
-      echo json_encode($output);
+      return $retVal;
     }
-*/
+    catch(PDOException $e) {
+      $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
+    }
+  }
+
+  public function hasRolePermission($roleId, $permission) {
+    try {
+      $query = $this->connection->prepare("SELECT 1 FROM permission_role WHERE role_id=:roleId AND permission_id=:permission");
+      $query->bindParam("roleid", $roleId, PDO::PARAM_STR);
+      $query->bindParam("permission", $permission, PDO::PARAM_STR);
+      $query->execute();
+      $query->setFetchMode(PDO::FETCH_NUM);
+      return $obj = $query->fetch();
+    }
+    catch(PDOException $e) {
+      $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
+    }
+  }
+
+  public function updatePermissions($roleId, $permissions) {
+    $oldPermissions = $this->getPermissionIDsFromRole($roleId);
+    $toDelete = array_diff($oldPermissions, $permissions);
+    $toAdd = array_diff($permissions, $oldPermissions);
+    foreach ($toDelete as $permissionId) {
+      $this->deletePermission($roleId, $permissionId);
+    }
+    foreach ($toAdd as $permissionId) {
+      $this->addPermission($roleId, $permissionId);
+    }
+  }
+
+  private function addPermission($roleId, $permissionId) {
+    try {
+      $query = $this->connection->prepare("INSERT INTO permission_role(ROLE_ID,PERMISSION_ID) VALUES (:roleId,:permissionId)");
+      $query->bindParam("roleId", $roleId, PDO::PARAM_STR);
+      $query->bindParam("permissionId", $permissionId,PDO::PARAM_STR);
+      $query->execute();
+      $id = $this->connection->lastInsertID();
+      return $id;
+    } catch(PDOException $e) {
+      $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
+      return 0;
+    }
+  }
+
+  private function deletePermission($roleId, $permissionId) {
+    try {
+      $query = $this->connection->prepare("DELETE FROM permission_role WHERE role_id=:roleId AND permission_id=:permissionId");
+      $query->bindParam("roleId", $roleId, PDO::PARAM_STR);
+      $query->bindParam("permissionId", $permissionId, PDO::PARAM_STR);
+      $query->execute();
+      $deleted = $query->rowCount();
+      return $deleted;
+    } catch(PDOException $e) {
+      $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
+      return 0;
+    }
+  }
+
 }
 ?>
