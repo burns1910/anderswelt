@@ -1,5 +1,5 @@
 <?php
-class Permission {
+class Permission implements JsonSerializable {
 
 /*----------- Properties ----------------*/
 
@@ -30,6 +30,18 @@ class Permission {
   public function setNachname($description) {
     $this->description = $description;
   }
+
+/*----------- JsonSerializable ----------------*/
+
+public function jsonSerialize()
+{
+    return
+    [
+        'id'   => $this->getId(),
+        'name' => $this->getName(),
+        'description' => $this->getDescription()
+    ];
+}
 
 }
 ?>

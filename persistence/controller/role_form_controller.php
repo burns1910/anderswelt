@@ -3,10 +3,6 @@ include BASE_PATH.'/persistence/dao/RoleDAO.php';
 $connection = $database->getConnection();
 $roleDao = new RoleDAO($connection);
 
-if (isset($_POST['listRoles'])) {
-  getAllRolesAsTable();
-}
-
 if (isset($_POST['add-role'])) {
 
     $name = $_POST['name'];
