@@ -8,36 +8,38 @@ if(!empty($_POST['action']) && $_POST['action'] == 'listPermissions') {
 	$permissionDao->listPermissions();
 }
 
-if (isset($_POST['add-permission'])) {
+if(!empty($_POST['action']) && $_POST['action'] == 'addPermission') {
+  $name = $_POST['permName'];
+  $description = $_POST['permDescription'];
 
-    $name = $_POST['name'];
-    $description = $_POST['description'];
-
-    $permission_id = $permissionDao->addPermission($name, $description);
-    if($permission_id!=0) {
-        $_SESSION['success_msg'] = 'Berechtigung '.$name.' wurde erfolgreich zur Liste hinzugefügt.';
-    } else {
-        $_SESSION['error_msg'] = 'Irgendwas ist schief gelaufen :/';
-    }
+  $permission_id = $permissionDao->addPermission($name, $description);
+  if($permission_id!=0) {
+      $_SESSION['success_msg'] = 'Berechtigung '.$name.' wurde erfolgreich zur Liste hinzugefügt.';
+  } else {
+      $_SESSION['error_msg'] = 'Irgendwas ist schief gelaufen :/';
+  }
 }
 
-if (isset($_POST['edit-permission'])) {
-    $id = $_POST['id'];
-    $name = $_POST['name'];
-    $description = $_POST['description'];
-    $permission_id = $permissionDao->updatePermission($id, $name, $description);
-    if($permission_id!=0) {
-        $_SESSION['success_msg'] = 'Berechtigung '.$name.' wurde erfolgreich ge&auml;ndert.';
-    }
+if(!empty($_POST['action']) && $_POST['action'] == 'getPermission') {
+	$permObj = $permissionDao->getPermissionByID($_POST['permId']);
+	echo json_encode($permObj);
 }
 
-if (isset($_GET['id']) && isset($_GET['action'])) {
-    if(strcmp($_GET['action'], "delete") == 0) {
-        $permissionDao->deletePermission($_GET['id']);
-        $_SESSION['success_msg'] = 'Berechtigung wurde erfolgreich gel&ouml;scht.';
-    } else {
-        $_SESSION['error_msg'] = 'Irgendwas ist schief gelaufen :/';
-    }
+if(!empty($_POST['action']) && $_POST['action'] == 'updatePermission') {
+  $id = $_POST['permId'];
+  $name = $_POST['permName'];
+  $description = $_POST['permDescription'];
+  $permission_id = $permissionDao->updatePermission($id, $name, $description);
+  if($permission_id!=0) {
+      $_SESSION['success_msg'] = 'Berechtigung '.$name.' wurde erfolgreich ge&auml;ndert.';
+  }
+}
+
+if(!empty($_POST['action']) && $_POST['action'] == 'deletePermission') {
+    $permission_id = $permissionDao->deletePermission($_POST['permId']);
+		if($permission_id!=0) {
+				$_SESSION['success_msg'] = 'Berechtigung '.$name.' wurde erfolgreich gel&ouml;scht.';
+		}
 }
 
 ?>

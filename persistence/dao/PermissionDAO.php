@@ -61,7 +61,9 @@ class PermissionDAO {
     foreach($permRecords as $row){
        $data[] = array(
           "id"=>$row['id'],
-          "name"=>$row['name']
+          "name"=>$row['name'],
+          "update"=>'<button type="button" name="update" id="'.$row["id"].'" class="btn btn-primary btn-xs update">Update</button>',
+          "delete"=>'<button type="button" name="delete" id="'.$row["id"].'" class="btn btn-pink btn-xs delete" >Delete</button>'
        );
     }
 
