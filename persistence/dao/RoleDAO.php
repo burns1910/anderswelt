@@ -10,6 +10,74 @@ class RoleDAO {
     $this->connection = $connection;
   }
 
+  public function listRoles() {
+    ## Read value
+    $draw = $_POST['draw'];
+    $row = $_POST['start'];
+    $rowperpage = $_POST['length']; // Rows display per page
+    $columnIndex = $_POST['order'][0]['column']; // Column index
+    $columnName = $_POST['columns'][$columnIndex]['data']; // Column name
+    $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
+    $searchValue = $_POST['search']['value']; // Search value
+
+    $searchArray = array();
+
+    ## Search
+    $searchQuery = " ";
+    if($searchValue != ''){
+       $searchQuery = " AND name LIKE :name ";
+       $searchArray = array(
+            'name'=>"%$searchValue%"
+       );
+    }
+
+    ## Total number of records without filtering
+    $stmt = $this->connection->prepare("SELECT COUNT(*) AS allcount FROM roles ");
+    $stmt->execute();
+    $records = $stmt->fetch();
+    $totalRecords = $records['allcount'];
+
+    ## Total number of records with filtering
+    $stmt = $this->connection->prepare("SELECT COUNT(*) AS allcount FROM roles WHERE 1 ".$searchQuery);
+    $stmt->execute($searchArray);
+    $records = $stmt->fetch();
+    $totalRecordwithFilter = $records['allcount'];
+
+    ## Fetch records
+    $stmt = $this->connection->prepare("SELECT * FROM roles WHERE 1 ".$searchQuery." ORDER BY ".$columnName." ".$columnSortOrder." LIMIT :limit,:offset");
+
+    // Bind values
+    foreach($searchArray as $key=>$search){
+       $stmt->bindValue(':'.$key, $search,PDO::PARAM_STR);
+    }
+
+    $stmt->bindValue(':limit', (int)$row, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', (int)$rowperpage, PDO::PARAM_INT);
+    $stmt->execute();
+    $roleRecords = $stmt->fetchAll();
+
+    $data = array();
+
+    foreach($roleRecords as $row){
+       $data[] = array(
+          "id"=>$row['id'],
+          "name"=>$row['name'],
+          "update"=>'<button type="button" name="update" id="'.$row["id"].'" class="btn btn-light btn-xs update">Bearbeiten</button>',
+          "delete"=>'<button type="button" name="delete" id="'.$row["id"].'" class="btn btn-light btn-xs delete" >L&ouml;schen</button>'
+       );
+    }
+
+    ## Response
+    $response = array(
+       "draw" => intval($draw),
+       "iTotalRecords" => $totalRecords,
+       "iTotalDisplayRecords" => $totalRecordwithFilter,
+       "aaData" => $data
+    );
+
+    echo json_encode($response);
+  }
+
   public function getRoleByID($id) {
     try {
       $query = $this->connection->prepare("SELECT * FROM roles WHERE id=:id");
@@ -113,14 +181,14 @@ class RoleDAO {
     $toDelete = array_diff($oldPermissions, $permissions);
     $toAdd = array_diff($permissions, $oldPermissions);
     foreach ($toDelete as $permissionId) {
-      $this->deletePermission($roleId, $permissionId);
+      $this->removePermission($roleId, $permissionId);
     }
     foreach ($toAdd as $permissionId) {
       $this->addPermission($roleId, $permissionId);
     }
   }
 
-  private function addPermission($roleId, $permissionId) {
+  public function addPermission($roleId, $permissionId) {
     try {
       $query = $this->connection->prepare("INSERT INTO permission_role(ROLE_ID,PERMISSION_ID) VALUES (:roleId,:permissionId)");
       $query->bindParam("roleId", $roleId, PDO::PARAM_STR);
@@ -134,7 +202,7 @@ class RoleDAO {
     }
   }
 
-  private function deletePermission($roleId, $permissionId) {
+  public function removePermission($roleId, $permissionId) {
     try {
       $query = $this->connection->prepare("DELETE FROM permission_role WHERE role_id=:roleId AND permission_id=:permissionId");
       $query->bindParam("roleId", $roleId, PDO::PARAM_STR);

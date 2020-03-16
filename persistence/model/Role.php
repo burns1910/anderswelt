@@ -1,5 +1,5 @@
 <?php
-class Role {
+class Role implements JsonSerializable {
 
 /*----------- Properties ----------------*/
 
@@ -44,6 +44,19 @@ class Role {
     $key = array_search($permission, $this->permissions);
     unset($this->permissions[$key]);
   }
+
+  /*----------- JsonSerializable ----------------*/
+
+  public function jsonSerialize()
+    {
+        return
+        [
+            'id'   => $this->getId(),
+            'name' => $this->getName(),
+            'description' => $this->getDescription(),
+            'permissions' => $this->getPermissions()
+        ];
+    }
 
 }
 

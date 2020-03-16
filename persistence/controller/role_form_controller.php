@@ -1,46 +1,61 @@
 <?php
+include '../../config.php';
 include BASE_PATH.'/persistence/dao/RoleDAO.php';
 $connection = $database->getConnection();
 $roleDao = new RoleDAO($connection);
 
-if (isset($_POST['add-role'])) {
-
-    $name = $_POST['name'];
-    $description = $_POST['description'];
-
-    $role_id = addRole($name, $description);
-    if($role_id!=0) {
-        $_SESSION['success_msg'] = 'Rolle '.$name.' wurde erfolgreich zur Liste hinzugefügt.';
-    } else {
-        $_SESSION['error_msg'] = 'Irgendwas ist schief gelaufen :/';
-    }
+if(!empty($_POST['action']) && $_POST['action'] == 'listRoles') {
+	$roleDao->listRoles();
 }
 
-if (isset($_POST['edit-role'])) {
-    $id = $_POST['id'];
-    $name = $_POST['name'];
-    $description = $_POST['description'];
-    $role_id = $roleDao->updateRole($id, $name, $description);
-    if(isset($_POST['permissions']) && !empty($_POST['permissions'])) {
-      if ( array_key_exists('permissions', $_POST)) {
-        $permissions = $_POST['permissions'];
-      }
-    } else {
-      $permissions = array();
+if(!empty($_POST['action']) && $_POST['action'] == 'addRole') {
+  $name = $_POST['roleName'];
+  $description = $_POST['roleDescription'];
+
+  $role_id = $roleDao->addRole($name, $description);
+  if($role_id!=0) {
+    foreach ($_POST['rolePermissions'] as $permId) {
+      $roleDao->addPermission($role_id, $permId);
     }
-    $roleDao->updatePermissions($id, $permissions);
-    if($role_id!=0) {
-        $_SESSION['success_msg'] = 'Rolle '.$name.' wurde erfolgreich ge&auml;ndert.';
-    }
+  }
 }
 
-if (isset($_GET['id']) && isset($_GET['action'])) {
-    if(strcmp($_GET['action'], "delete") == 0) {
-        deleteRole($_GET['id']);
-        $_SESSION['success_msg'] = 'Rolle wurde erfolgreich gel&ouml;scht.';
-    } else {
-        $_SESSION['error_msg'] = 'Irgendwas ist schief gelaufen :/';
-    }
+if(!empty($_POST['action']) && $_POST['action'] == 'deleteRole') {
+  $role_id = $_POST['roleId'];
+  $permissions = $roleDao->getPermissionIDsFromRole($role_id);
+
+  foreach ($permissions as $permId) {
+    $roleDao->removePermission($role_id, $permId);
+  }
+
+  $roleDao->deleteRole($role_id);
+}
+
+if(!empty($_POST['action']) && $_POST['action'] == 'getRole') {
+	$roleObj = $roleDao->getRoleByID($_POST['roleId']);
+	$permissions = $roleDao->getPermissionIDsFromRole($_POST['roleId']);
+	foreach ($permissions as $permission) {
+		$roleObj->setPermission($permission);
+	}
+	echo json_encode($roleObj);
+}
+
+if(!empty($_POST['action']) && $_POST['action'] == 'updateRole') {
+	$id = $_POST['roleId'];
+	$name = $_POST['roleName'];
+	$description = $_POST['roleDescription'];
+	$role_id = $roleDao->updateRole($id, $name, $description);
+	if(isset($_POST['rolePermissions']) && !empty($_POST['rolePermissions'])) {
+		if ( array_key_exists('rolePermissions', $_POST)) {
+			$permissions = $_POST['rolePermissions'];
+		}
+	} else {
+		$permissions = array();
+	}
+	$roleDao->updatePermissions($id, $permissions);
+	if($role_id!=0) {
+			$_SESSION['success_msg'] = 'Rolle '.$name.' wurde erfolgreich ge&auml;ndert.';
+	}
 }
 
 ?>

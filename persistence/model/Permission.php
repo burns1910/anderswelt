@@ -33,15 +33,15 @@ class Permission implements JsonSerializable {
 
 /*----------- JsonSerializable ----------------*/
 
-public function jsonSerialize()
-{
-    return
-    [
-        'id'   => $this->getId(),
-        'name' => $this->getName(),
-        'description' => $this->getDescription()
-    ];
-}
+  public function jsonSerialize()
+  {
+      return
+      [
+          'id'   => $this->getId(),
+          'name' => $this->getName(),
+          'description' => $this->getDescription()
+      ];
+  }
 
 }
 ?>

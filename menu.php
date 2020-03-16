@@ -1,3 +1,8 @@
+</head>
+<body>
+  <div class="jumbotron bg-primary text-center text-white" style="margin-bottom:0">
+    <h1>Anderswelt Planungskosmos</h1>
+  </div>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top mb-4">
       <a class="navbar-brand" href="/anderswelt/index.php">
         <img src="/anderswelt/ressources/img/logo-inv.png" style="width:40px;">
@@ -14,10 +19,10 @@
             <a class="nav-link" href="/anderswelt/views/user_table.php"><i class="fas fa-comments"></i> User</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/anderswelt/views/role_table.php"><i class="fas fa-comments"></i> Rollen</a>
+            <a class="nav-link" href="/anderswelt/views/roles.php"><i class="fas fa-comments"></i> Rollen</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/anderswelt/views/permission_table.php"><i class="fas fa-comments"></i> Berechtigungen</a>
+            <a class="nav-link" href="/anderswelt/views/permissions.php"><i class="fas fa-comments"></i> Berechtigungen</a>
           </li>
           <li class="nav-item">
             <a class="nav-link disabled" href="#">Keine Berechtigung</a>

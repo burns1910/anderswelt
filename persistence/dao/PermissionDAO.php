@@ -62,8 +62,8 @@ class PermissionDAO {
        $data[] = array(
           "id"=>$row['id'],
           "name"=>$row['name'],
-          "update"=>'<button type="button" name="update" id="'.$row["id"].'" class="btn btn-primary btn-xs update">Update</button>',
-          "delete"=>'<button type="button" name="delete" id="'.$row["id"].'" class="btn btn-pink btn-xs delete" >Delete</button>'
+          "update"=>'<button type="button" name="update" id="'.$row["id"].'" class="btn btn-light btn-xs update">Bearbeiten</button>',
+          "delete"=>'<button type="button" name="delete" id="'.$row["id"].'" class="btn btn-light btn-xs delete" >L&ouml;schen</button>'
        );
     }
 
