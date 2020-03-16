@@ -1,5 +1,5 @@
 <?php
-class User {
+class User implements JsonSerializable {
 
 /*----------- Properties ----------------*/
 
@@ -94,5 +94,20 @@ class User {
     $this->token_expire_date = $token_expire_date;
   }
 
+  /*----------- JsonSerializable ----------------*/
+
+  public function jsonSerialize()
+    {
+        return
+        [
+            'id'   => $this->getId(),
+            'role_id' => $this->getRoleId(),
+            'vorname' => $this->getvorname(),
+            'nachname' => $this->getNachname(),
+            'email' => $this->getEmail()
+        ];
+    }
+
 }
+
 ?>

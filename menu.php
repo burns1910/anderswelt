@@ -16,7 +16,7 @@
             <a class="nav-link" href="/anderswelt/views/va_add_list.php"><i class="far fa-calendar-alt"></i> Veranstaltungen</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/anderswelt/views/user_table.php"><i class="fas fa-comments"></i> User</a>
+            <a class="nav-link" href="/anderswelt/views/users.php"><i class="fas fa-comments"></i> User</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/anderswelt/views/roles.php"><i class="fas fa-comments"></i> Rollen</a>
