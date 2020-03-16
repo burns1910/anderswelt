@@ -26,7 +26,7 @@ else {
   <h2>Rollen</h2>
   <button type="button" name="add" id="addRole" class="btn btn-primary">+ hinzuf&uuml;gen</button>
   <hr>
-  <table id="roleTable" class="table table-hover display dataTable">
+  <table id="roleTable" class="table table-hover table-bordered">
     <thead class="thead-dark">
       <tr>
         <th>ID</th>
