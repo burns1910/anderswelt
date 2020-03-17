@@ -13,7 +13,7 @@
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
           <li class="nav-item active">
-            <a class="nav-link" href="/anderswelt/views/va_add_list.php"><i class="far fa-calendar-alt"></i> Veranstaltungen</a>
+            <a class="nav-link" href="/anderswelt/views/veranstaltungen.php"><i class="far fa-calendar-alt"></i> Veranstaltungen</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/anderswelt/views/users.php"><i class="fas fa-comments"></i> User</a>

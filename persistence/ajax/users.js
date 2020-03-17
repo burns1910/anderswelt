@@ -27,7 +27,7 @@ $(document).ready(function(){
         { data: 'vorname' },
         { data: 'nachname' },
         { data: 'email' },
-        { data: 'role' },
+        { data: 'role', "orderable": false },
         { data: 'update', "orderable": false },
         { data: 'delete', "orderable": false }
     ]

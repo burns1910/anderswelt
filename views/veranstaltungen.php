@@ -1,10 +1,12 @@
 <?php
 include '../config.php';
-include '../controller/va_form_controller.php';
-include '../header.php';
-include '../menu.php';
+include BASE_PATH.'/header.php';
+include BASE_PATH.'/persistence/dao/VeranstaltungDAO.php';
+?>    <title>User</title>
+<?php
+include BASE_PATH.'/menu.php';
 
-if(!$logged_in_admin) {
+if(!isset($_SESSION['user_id'])) {
 
 ?>
 
@@ -15,6 +17,9 @@ if(!$logged_in_admin) {
 <?php
 }
 else {
+  $connection = $database->getConnection();
+  $vaDao = new VeranstaltungDAO($connection);
+  $allVA = $vaDao->getAnstehendeVA();
 ?>
     <div class="container-fluid mt-4">
       <div class="row">
@@ -32,23 +37,22 @@ else {
 <?php
         include '../utils/messages.php';
         echo '          <h4 class="mb-4">Folgende Veranstaltungen stehen bevor:</h4>'."\n";
-    $veranstaltungen = getAnstehendeVA();
-    if($veranstaltungen!=null) {
-        foreach ($veranstaltungen as $va) {
+    if($allVA!=null) {
+        foreach ($allVA as $va) {
           echo '          <div class="card bg-light mb-3" style="width:400px">'."\n";
-          if($va['header'] != NULL) {
-            echo '            <img class="card-img-top" src="/anderswelt/img/va_header/'.$va['header'].'" alt="'.$va['titel'].'">'."\n";
+          if($va->getHeader() != NULL) {
+            echo '            <img class="card-img-top" src="/anderswelt/ressources/img/va_header/'.$va->getHeader().'" alt="'.$va->getTitel().'">'."\n";
           } else {
-            echo '            <img class="card-img-top" src="/anderswelt/img/va_header/default.png" alt="'.$va['titel'].'">'."\n";
+            echo '            <img class="card-img-top" src="/anderswelt/ressources/img/va_header/default.png" alt="'.$va->getTitel().'">'."\n";
           }
-          echo '            <div class="card-title text-center">'.$va['titel'].'</div>'."\n";
+          echo '            <div class="card-title text-center">'.$va->getTitel().'</div>'."\n";
           echo '              <ul class="list-group list-group-flush">'."\n";
-          echo '                <li class="list-group-item">Beginn: '.$va['start'].'</li>'."\n";
-          echo '                <li class="list-group-item">Ende: '.$va['ende'].'</li>'."\n";
+          echo '                <li class="list-group-item">Beginn: '.$va->getStart().'</li>'."\n";
+          echo '                <li class="list-group-item">Ende: '.$va->getEnde().'</li>'."\n";
           echo '              </ul>'."\n";
           echo '              <div class="card-body">'."\n";
-          echo '                <a href="gl_add_list.php?va_id='.$va['id'].'" class="btn btn-primary">Besteliste bearbeiten</a>'."\n";
-          echo '                <a href="tt_edit.php?va_id='.$va['id'].'" class="btn btn-primary">Timetable bearbeiten</a>'."\n";
+          echo '                <a href="gl_add_list.php?va_id='.$va->getId().'" class="btn btn-primary">Besteliste bearbeiten</a>'."\n";
+          echo '                <a href="tt_edit.php?va_id='.$va->getId().'" class="btn btn-primary">Timetable bearbeiten</a>'."\n";
           echo '              </div>'."\n";
           echo '            </div>'."\n";
         }
