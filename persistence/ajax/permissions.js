@@ -44,11 +44,13 @@ $(document).ready(function(){
       url:"../persistence/controller/permission_form_controller.php",
       method:"POST",
       data:formData,
+      dataType: "json",
       success:function(data){
         $('#permissionForm')[0].reset();
         $('#permissionModal').modal('hide');
         $('#save').attr('disabled', false);
         dataTable.ajax.reload();
+        setMessage(data);
       }
     })
   });
@@ -60,8 +62,10 @@ $(document).ready(function(){
         url:"../persistence/controller/permission_form_controller.php",
         method:"POST",
         data:{permId:permId, action:action},
+        dataType:"json",
         success:function(data) {
           dataTable.ajax.reload();
+          setMessage(data);
         }
       })
     } else {
@@ -84,6 +88,7 @@ $(document).ready(function(){
         $('.modal-title').html("<i class='fa fa-plus'></i> Berechtigung bearbeiten");
         $('#action').val('updatePermission');
         $('#save').val('Speichern');
+        setMessage(data);
       }
     })
   });

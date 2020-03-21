@@ -87,7 +87,7 @@ class PermissionDAO {
       return $obj = $query->fetch();
     }
     catch(PDOException $e) {
-      $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
+      return -1;
     }
   }
 
@@ -99,7 +99,7 @@ class PermissionDAO {
       return $obj = $query->fetchAll();
     }
     catch(PDOException $e) {
-      $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
+      return -1;
     }
   }
 
@@ -112,8 +112,7 @@ class PermissionDAO {
       $id = $this->connection->lastInsertID();
       return $id;
     } catch(PDOException $e) {
-      $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
-      return 0;
+      return -1;
     }
   }
 
@@ -127,8 +126,7 @@ class PermissionDAO {
       $updated = $query->rowCount();
       return $updated;
     } catch(PDOException $e) {
-      $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
-      return 0;
+      return -1;
     }
   }
 
@@ -140,8 +138,7 @@ class PermissionDAO {
       $deleted = $query->rowCount();
       return $deleted;
     } catch(PDOException $e) {
-      $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
-      return 0;
+      return -1;
     }
   }
 

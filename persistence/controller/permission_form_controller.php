@@ -13,10 +13,12 @@ if(!empty($_POST['action']) && $_POST['action'] == 'addPermission') {
   $description = $_POST['permDescription'];
 
   $permission_id = $permissionDao->addPermission($name, $description);
-  if($permission_id!=0) {
-      $_SESSION['success_msg'] = 'Berechtigung '.$name.' wurde erfolgreich zur Liste hinzugefügt.';
+  if($permission_id>0) {
+		$message = array('msgText'=>'Berechtigung '.$name.' wurde erfolgreich zur Liste hinzugefügt.', 'msgType'=>'alert-success');
+    echo json_encode($message);
   } else {
-      $_SESSION['error_msg'] = 'Irgendwas ist schief gelaufen :/';
+		$message = array('msgText'=>'Irgendwas ist schief gelaufen :/', 'msgType'=>'alert-danger');
+		echo json_encode($message);
   }
 }
 
@@ -30,15 +32,17 @@ if(!empty($_POST['action']) && $_POST['action'] == 'updatePermission') {
   $name = $_POST['permName'];
   $description = $_POST['permDescription'];
   $permission_id = $permissionDao->updatePermission($id, $name, $description);
-  if($permission_id!=0) {
-      $_SESSION['success_msg'] = 'Berechtigung '.$name.' wurde erfolgreich ge&auml;ndert.';
+  if($permission_id>0) {
+		$message = array('msgText'=>'Berechtigung '.$name.' wurde erfolgreich ge&auml;ndert.', 'msgType'=>'alert-success');
+		echo json_encode($message);
   }
 }
 
 if(!empty($_POST['action']) && $_POST['action'] == 'deletePermission') {
     $permission_id = $permissionDao->deletePermission($_POST['permId']);
-		if($permission_id!=0) {
-				$_SESSION['success_msg'] = 'Berechtigung '.$name.' wurde erfolgreich gel&ouml;scht.';
+		if($permission_id>0) {
+			$message = array('msgText'=>'Berechtigung wurde erfolgreich gel&ouml;scht.', 'msgType'=>'alert-success');
+			echo json_encode($message);
 		}
 }
 

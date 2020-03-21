@@ -33,3 +33,6 @@
         </ul>
       </div>
     </nav>
+    <div class="alert alert-success" hidden></div>
+    <div class="alert alert-danger" hidden></div>
+    <div class="alert alert-info" hidden></div>

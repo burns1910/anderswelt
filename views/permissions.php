@@ -19,7 +19,6 @@ else {
 
 ?>
   <div class="container">
-    <?php include '../utils/messages.php' ?>
     <h2>Berechtigungen</h2>
     <button type="button" name="add" id="addPermission" class="btn btn-primary">+ hinzuf&uuml;gen</button>
     <hr>
