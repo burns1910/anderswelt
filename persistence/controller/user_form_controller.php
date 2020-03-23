@@ -21,15 +21,29 @@ if(!empty($_POST['action']) && $_POST['action'] == 'updateUser') {
   $role_id = $_POST['userRole'];
   $user = $userDao->getUserById($id);
   $pw_hash = $user->getPW();
-
-  $update = $userDao->updateUser($id, $role_id, $vorname, $nachname, $email, $pw_hash);
-  if($update!=0) {
-      $_SESSION['success_msg'] = 'User '.$vorname.' '.$nachname.' wurde erfolgreich ge&auml;ndert.';
-  }
+  $updated = $userDao->updateUser($id, $role_id, $vorname, $nachname, $email, $pw_hash);
+	switch ($updated) {
+		case '1':
+			$message = array('msgText'=>'User '.$vorname.' '.$nachname.' wurde erfolgreich ge&auml;ndert.', 'msgType'=>'alert-success');
+			break;
+		case '0':
+			$message = array('msgText'=>'Keine Änderungen vorgenommen', 'msgType'=>'alert-info');
+			break;
+		default:
+			$message = array('msgText'=>'Irgendwas ist schief gegangen :/', 'msgType'=>'alert-danger');
+			break;
+	}
+	echo json_encode($message);
 }
 
 if(!empty($_POST['action']) && $_POST['action'] == 'deleteUser') {
-  $userDao->deleteUser($_POST['userId']);
+	$user_id = $_POST['userId'];
+	$deleted = $userDao->deleteUser($user_id);
+	if($deleted>0) {
+		$message = array('msgText'=>'User wurde erfolgreich gelöscht.', 'msgType'=>'alert-success');
+	} else {
+		$message = array('msgText'=>'Irgendwas ist schief gegangen :/', 'msgType'=>'alert-danger');
+	}
 }
 
 ?>

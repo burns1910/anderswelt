@@ -105,8 +105,7 @@ class UserDAO {
       return $obj = $query->fetch();
     }
     catch(PDOException $e) {
-      $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
-      return 0;
+      return -1;
     }
   }
 
@@ -119,8 +118,7 @@ class UserDAO {
       return $obj = $query->fetch();
     }
     catch(PDOException $e) {
-      $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
-      return 0;
+      return -1;
     }
   }
 
@@ -132,8 +130,7 @@ class UserDAO {
       return $obj = $query->fetchAll();
     }
     catch(PDOException $e) {
-      $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
-      return 0;
+      return -1;
     }
   }
 
@@ -150,8 +147,7 @@ class UserDAO {
       $id = $this->connection->lastInsertID();
       return $id;
     } catch(PDOException $e) {
-      $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
-      return 0;
+      return -1;
     }
   }
 
@@ -168,12 +164,10 @@ class UserDAO {
       $updated = $query->rowCount();
       return $updated;
     } catch(PDOException $e) {
-      $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
-      return 0;
+      return -1;
     }
   }
 
-//TODO: Service Layer für kombinierte Hilfsmethoden implementieren
   public function updatePWByMail($email, $pw_hash) {
     try {
       $query = $this->connection->prepare("UPDATE user SET pw_hash=:pw_hash WHERE email=:email");
@@ -183,8 +177,7 @@ class UserDAO {
       $updated = $query->rowCount();
       return $updated;
     } catch(PDOException $e) {
-      $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
-      return 0;
+      return -1;
     }
   }
 
@@ -196,8 +189,7 @@ class UserDAO {
       $deleted = $query->rowCount();
       return $deleted;
     } catch(PDOException $e) {
-      $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
-      return 0;
+      return -1;
     }
   }
 
@@ -212,7 +204,7 @@ class UserDAO {
       }
     }
     catch (PDOException $e) {
-      $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
+      return -1;
     }
     return $userExists;
   }
@@ -224,7 +216,7 @@ class UserDAO {
       $query->execute();
     }
     catch (PDOException $e) {
-      $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
+      return -1;
     }
   }
 

@@ -50,7 +50,6 @@ $(document).ready(function(){
         $('#roleModal').modal('hide');
         $('#save').attr('disabled', false);
         dataTable.ajax.reload();
-        setMessage(data);
       }
     })
   });

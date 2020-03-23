@@ -22,7 +22,6 @@ else {
   $allRoles = $roleDao->getAllRoles();
 ?>
 <div class="container">
-  <?php include '../utils/messages.php' ?>
   <h2>User</h2>
   <table id="userTable" class="table table-hover table-bordered">
     <thead class="thead-dark">

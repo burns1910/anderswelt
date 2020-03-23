@@ -40,11 +40,13 @@ $(document).ready(function(){
       url:"../persistence/controller/user_form_controller.php",
       method:"POST",
       data:formData,
+      dataType:"json",
       success:function(data){
         $('#userForm')[0].reset();
         $('#userModal').modal('hide');
         $('#save').attr('disabled', false);
         dataTable.ajax.reload();
+        setMessage(data);
       }
     })
   });
@@ -56,8 +58,10 @@ $(document).ready(function(){
         url:"../persistence/controller/user_form_controller.php",
         method:"POST",
         data:{userId:userId, action:action},
+        dataType:"json",
         success:function(data) {
           dataTable.ajax.reload();
+          setMessage(data);
         }
       })
     } else {
@@ -82,6 +86,8 @@ $(document).ready(function(){
         $('.modal-title').html("<i class='fa fa-plus'></i> Rolle zuweisen");
         $('#action').val('updateUser');
         $('#save').val('Speichern');
+        dataTable.ajax.reload();
+        setMessage(data);
       }
     })
   });
