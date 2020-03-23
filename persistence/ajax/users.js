@@ -86,8 +86,6 @@ $(document).ready(function(){
         $('.modal-title').html("<i class='fa fa-plus'></i> Rolle zuweisen");
         $('#action').val('updateUser');
         $('#save').val('Speichern');
-        dataTable.ajax.reload();
-        setMessage(data);
       }
     })
   });

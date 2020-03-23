@@ -44,6 +44,7 @@ if(!empty($_POST['action']) && $_POST['action'] == 'deleteUser') {
 	} else {
 		$message = array('msgText'=>'Irgendwas ist schief gegangen :/', 'msgType'=>'alert-danger');
 	}
+	echo json_encode($message);
 }
 
 ?>
