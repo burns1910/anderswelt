@@ -15,11 +15,10 @@ if(!empty($_POST['action']) && $_POST['action'] == 'addPermission') {
   $permission_id = $permissionDao->addPermission($name, $description);
   if($permission_id>0) {
 		$message = array('msgText'=>'Berechtigung '.$name.' wurde erfolgreich zur Liste hinzugefügt.', 'msgType'=>'alert-success');
-    echo json_encode($message);
   } else {
 		$message = array('msgText'=>'Irgendwas ist schief gelaufen :/', 'msgType'=>'alert-danger');
-		echo json_encode($message);
   }
+	echo json_encode($message);
 }
 
 if(!empty($_POST['action']) && $_POST['action'] == 'getPermission') {
@@ -31,19 +30,30 @@ if(!empty($_POST['action']) && $_POST['action'] == 'updatePermission') {
   $id = $_POST['permId'];
   $name = $_POST['permName'];
   $description = $_POST['permDescription'];
-  $permission_id = $permissionDao->updatePermission($id, $name, $description);
-  if($permission_id>0) {
-		$message = array('msgText'=>'Berechtigung '.$name.' wurde erfolgreich ge&auml;ndert.', 'msgType'=>'alert-success');
-		echo json_encode($message);
-  }
+  $permissionUpdated = $permissionDao->updatePermission($id, $name, $description);
+	switch ($permissionUpdated) {
+		case '1':
+			$message = array('msgText'=>'Berechtigung '.$name.' wurde erfolgreich ge&auml;ndert.', 'msgType'=>'alert-success');
+			break;
+		case '0':
+			$message = array('msgText'=>'Keine Änderungen vorgenommen', 'msgType'=>'alert-info');
+			break;
+		default:
+			$message = array('msgText'=>'Irgendwas ist schief gegangen :/', 'msgType'=>'alert-danger');
+			break;
+	}
+	echo json_encode($message);
 }
 
 if(!empty($_POST['action']) && $_POST['action'] == 'deletePermission') {
-    $permission_id = $permissionDao->deletePermission($_POST['permId']);
-		if($permission_id>0) {
-			$message = array('msgText'=>'Berechtigung wurde erfolgreich gel&ouml;scht.', 'msgType'=>'alert-success');
-			echo json_encode($message);
-		}
+	$permId = $_POST['permId'];
+  $deleted = $permissionDao->deletePermission($permId);
+	if($deleted>0) {
+		$message = array('msgText'=>'Berechtigung wurde erfolgreich gel&ouml;scht.', 'msgType'=>'alert-success');
+	} else {
+		$message = array('msgText'=>'Irgendwas ist schief gegangen :/', 'msgType'=>'alert-danger');
+	}
+	echo json_encode($message);
 }
 
 ?>
