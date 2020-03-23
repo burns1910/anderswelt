@@ -16,6 +16,10 @@ class Database {
     $this->connection = NULL;
   }
 
+  function __destruct() {
+    $this->connection = null;
+  }
+
   public function getConnection() {
     if(is_null($this->connection)) {
       try {

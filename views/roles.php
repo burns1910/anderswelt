@@ -22,7 +22,6 @@ else {
   $allPermissions = $permissionDao->getAllPermissions();
 ?>
 <div class="container">
-  <?php include '../utils/messages.php' ?>
   <h2>Rollen</h2>
   <button type="button" name="add" id="addRole" class="btn btn-primary">+ hinzuf&uuml;gen</button>
   <hr>

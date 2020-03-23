@@ -44,11 +44,13 @@ $(document).ready(function(){
       url:"../persistence/controller/role_form_controller.php",
       method:"POST",
       data:formData,
+      dataType:"json",
       success:function(data){
         $('#roleForm')[0].reset();
         $('#roleModal').modal('hide');
         $('#save').attr('disabled', false);
         dataTable.ajax.reload();
+        setMessage(data);
       }
     })
   });
@@ -60,8 +62,10 @@ $(document).ready(function(){
         url:"../persistence/controller/role_form_controller.php",
         method:"POST",
         data:{roleId:roleId, action:action},
+        dataType:"json",
         success:function(data) {
           dataTable.ajax.reload();
+          setMessage(data);
         }
       })
     } else {
@@ -85,6 +89,8 @@ $(document).ready(function(){
         $('.modal-title').html("<i class='fa fa-plus'></i> Rolle bearbeiten");
         $('#action').val('updateRole');
         $('#save').val('Speichern');
+        dataTable.ajax.reload();
+        setMessage(data);
       }
     })
   });

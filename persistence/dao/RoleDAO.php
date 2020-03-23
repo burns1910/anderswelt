@@ -87,7 +87,7 @@ class RoleDAO {
       return $obj = $query->fetch();
     }
     catch(PDOException $e) {
-      $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
+      return -1;
     }
   }
 
@@ -99,7 +99,7 @@ class RoleDAO {
       return $obj = $query->fetchAll();
     }
     catch(PDOException $e) {
-      $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
+      return -1;
     }
   }
 
@@ -112,8 +112,7 @@ class RoleDAO {
       $id = $this->connection->lastInsertID();
       return $id;
     } catch(PDOException $e) {
-      $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
-      return 0;
+      return -1;
     }
   }
 
@@ -127,8 +126,7 @@ class RoleDAO {
       $updated = $query->rowCount();
       return $updated;
     } catch(PDOException $e) {
-      $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
-      return 0;
+      return -1;
     }
   }
 
@@ -140,8 +138,7 @@ class RoleDAO {
       $deleted = $query->rowCount();
       return $deleted;
     } catch(PDOException $e) {
-      $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
-      return 0;
+      return -1;
     }
   }
 
@@ -158,7 +155,7 @@ class RoleDAO {
       return $retVal;
     }
     catch(PDOException $e) {
-      $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
+      return -1;
     }
   }
 
@@ -172,20 +169,24 @@ class RoleDAO {
       return $obj = $query->fetch();
     }
     catch(PDOException $e) {
-      $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
+      return -1;
     }
   }
 
   public function updatePermissions($roleId, $permissions) {
+    $retVal = 0;
     $oldPermissions = $this->getPermissionIDsFromRole($roleId);
     $toDelete = array_diff($oldPermissions, $permissions);
     $toAdd = array_diff($permissions, $oldPermissions);
     foreach ($toDelete as $permissionId) {
       $this->removePermission($roleId, $permissionId);
+      $retVal = 1;
     }
     foreach ($toAdd as $permissionId) {
       $this->addPermission($roleId, $permissionId);
+      $retVal = 1;
     }
+    return $retVal;
   }
 
   public function addPermission($roleId, $permissionId) {
@@ -197,8 +198,7 @@ class RoleDAO {
       $id = $this->connection->lastInsertID();
       return $id;
     } catch(PDOException $e) {
-      $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
-      return 0;
+      return -1;
     }
   }
 
@@ -211,8 +211,7 @@ class RoleDAO {
       $deleted = $query->rowCount();
       return $deleted;
     } catch(PDOException $e) {
-      $_SESSION['error_msg'] = "Irgendwas ist schief gegangen :/";
-      return 0;
+      return -1;
     }
   }
 

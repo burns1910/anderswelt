@@ -88,6 +88,7 @@ $(document).ready(function(){
         $('.modal-title').html("<i class='fa fa-plus'></i> Berechtigung bearbeiten");
         $('#action').val('updatePermission');
         $('#save').val('Speichern');
+        dataTable.ajax.reload();
         setMessage(data);
       }
     })
