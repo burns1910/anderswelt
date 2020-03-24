@@ -2,7 +2,7 @@
 include '../config.php';
 include BASE_PATH.'/header.php';
 include BASE_PATH.'/persistence/dao/VeranstaltungDAO.php';
-?>    <title>User</title>
+?>    <title>Veranstaltungen</title>
 <?php
 include BASE_PATH.'/menu.php';
 
@@ -22,20 +22,17 @@ else {
   $allVA = $vaDao->getAnstehendeVA();
 ?>
     <div class="container-fluid mt-4">
-      <div class="row">
-        <div class="row col-xl-2">
-          <ul>
-            <li>
-              <a href="va_add_list.php"><i class="far fa-calendar-alt"></i> &Uuml;bersicht</a>
-            </li>
-            <li>
-              <a href="#" data-toggle="modal" data-target="#myModal"><i class="far fa-calendar-plus"></i> Veranstaltung erstellen</a>
-            </li>
-          </ul>
+      <div class="row row-offcanvas row-offcanvas-left">
+        <div class="col-12 col-md-3 col-xl-2 sidebar-offcanvas" id="sidebar" role="navigation">
+          <nav class="sidebar-nav">
+            <ul class="nav">
+              <li class="nav-item"><a class="nav-link" href="veranstaltungen.php"><i class="far fa-calendar-alt"></i> &Uuml;bersicht</a></li>
+              <li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#myModal"><i class="far fa-calendar-plus"></i> Veranstaltung erstellen</a></li>
+            </ul>
+          </nav>
         </div>
-        <div class="col-xl-10">
+        <div class="col-12 col-md-12 col-xl-10">
 <?php
-        include '../utils/messages.php';
         echo '          <h4 class="mb-4">Folgende Veranstaltungen stehen bevor:</h4>'."\n";
     if($allVA!=null) {
         foreach ($allVA as $va) {
@@ -70,32 +67,32 @@ else {
             </div>
             <div class="modal-body">
               <form method="post" action="" enctype="multipart/form-data" class="needs-validation" novalidate>
-                  <div class="form-group">
-                      <label for="inputTitel">Titel</label>
-                      <input type="text" class="form-control" id="inputTitel" name="titel" pattern="[a-zA-Z0-9]+" required />
-                  </div>
-                  <div class="form-group">
-                      <label for="inputStartDatum">Start-Datum:</label>
-                      <input type="date" class="form-control" id="inputStartDatum" name="start_tag" required />
-                  </div>
-                  <div class="form-group">
-                      <label for="inputStartZeit">Start-Uhrzeit:</label>
-                      <input type="time" class="form-control" id="inputStartZeit" name="start_zeit" required />
-                  </div>
-                  <div class="form-group">
-                      <label for="inputEndeDatum">Ende-Datum:</label>
-                      <input type="date" class="form-control" id="inputEndeDatum" name="ende_tag" required />
-                  </div>
-                  <div class="form-group">
-                      <label for="inputEndeZeit">Ende-Uhrzeit:</label>
-                      <input type="time" class="form-control" id="inputEndeZeit" name="ende_zeit" required />
-                  </div>
-                  <p>Header:</p>
-                  <div class="custom-file mb-3">
-                    <input type="file" class="custom-file-input" id="customFile" name="header">
-                    <label class="custom-file-label" for="customFile">Datei auswählen</label>
-                  </div>
-                  <button type="submit" class="btn btn-primary" name="create-va" value="create-va">Erstellen</button>
+                <div class="form-group">
+                  <label for="inputTitel">Titel</label>
+                  <input type="text" class="form-control" id="inputTitel" name="titel" pattern="[a-zA-Z0-9]+" required />
+                </div>
+                <div class="form-group">
+                  <label for="inputStartDatum">Start-Datum:</label>
+                  <input type="date" class="form-control" id="inputStartDatum" name="start_tag" required />
+                </div>
+                <div class="form-group">
+                  <label for="inputStartZeit">Start-Uhrzeit:</label>
+                  <input type="time" class="form-control" id="inputStartZeit" name="start_zeit" required />
+                </div>
+                <div class="form-group">
+                  <label for="inputEndeDatum">Ende-Datum:</label>
+                  <input type="date" class="form-control" id="inputEndeDatum" name="ende_tag" required />
+                </div>
+                <div class="form-group">
+                  <label for="inputEndeZeit">Ende-Uhrzeit:</label>
+                  <input type="time" class="form-control" id="inputEndeZeit" name="ende_zeit" required />
+                </div>
+                <p>Header:</p>
+                <div class="custom-file mb-3">
+                  <input type="file" class="custom-file-input" id="customFile" name="header">
+                  <label class="custom-file-label" for="customFile">Datei auswählen</label>
+                </div>
+                <button type="submit" class="btn btn-primary" name="create-va" value="create-va">Erstellen</button>
               </form>
             </div>
           </div>

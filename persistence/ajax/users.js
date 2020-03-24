@@ -89,4 +89,13 @@ $(document).ready(function(){
       }
     })
   });
+
+//  $(document).ready(function () {
+      $('.bd-toc-item').on('click', function () {
+          $(this).toggleClass('active');
+      });
+      $('.nav-item').on('click', function () {
+          $(this).toggleClass('active');
+      });
+//  });
 });
