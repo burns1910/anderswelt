@@ -22,16 +22,16 @@ else {
   $allVA = $vaDao->getAnstehendeVA();
 ?>
     <div class="container-fluid mt-4">
-      <div class="row row-offcanvas row-offcanvas-left">
-        <div class="col-12 col-md-3 col-xl-2 sidebar-offcanvas" id="sidebar" role="navigation">
+      <div class="row">
+        <div class="col-sm-2 sidebar-offcanvas" id="sidebar" role="navigation">
           <nav class="sidebar-nav">
-            <ul class="nav">
+            <ul class="nav flex-column">
               <li class="nav-item"><a class="nav-link" href="veranstaltungen.php"><i class="far fa-calendar-alt"></i> &Uuml;bersicht</a></li>
               <li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#myModal"><i class="far fa-calendar-plus"></i> Veranstaltung erstellen</a></li>
             </ul>
           </nav>
         </div>
-        <div class="col-12 col-md-12 col-xl-10">
+        <div class="col-sm-10">
 <?php
         echo '          <h4 class="mb-4">Folgende Veranstaltungen stehen bevor:</h4>'."\n";
     if($allVA!=null) {
